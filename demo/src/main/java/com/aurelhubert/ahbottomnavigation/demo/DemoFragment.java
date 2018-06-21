@@ -15,7 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
@@ -31,9 +30,8 @@ public class DemoFragment extends Fragment {
 	
 	private FrameLayout fragmentContainer;
 	private RecyclerView recyclerView;
-	private RecyclerView.LayoutManager layoutManager;
-	
-	/**
+
+    /**
 	 * Create a new instance of the fragment
 	 */
 	public static DemoFragment newInstance(int index) {
@@ -79,48 +77,26 @@ public class DemoFragment extends Fragment {
 		switchTranslucentNavigation.setVisibility(
 				Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? View.VISIBLE : View.GONE);
 		
-		switchTranslucentNavigation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				getActivity()
-						.getSharedPreferences("shared", Context.MODE_PRIVATE)
-						.edit()
-						.putBoolean("translucentNavigation", isChecked)
-						.apply();
-				demoActivity.reload();
-			}
-		});
-		switchColored.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				demoActivity.updateBottomNavigationColor(isChecked);
-			}
-		});
-		switchFiveItems.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				demoActivity.updateBottomNavigationItems(isChecked);
-			}
-		});
-		showHideBottomNavigation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				demoActivity.showOrHideBottomNavigation(isChecked);
-			}
-		});
-		showSelectedBackground.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				demoActivity.updateSelectedBackgroundVisibility(isChecked);
-			}
-		});
+		switchTranslucentNavigation.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            getActivity()
+                    .getSharedPreferences("shared", Context.MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("translucentNavigation", isChecked)
+                    .apply();
+            demoActivity.reload();
+        });
+		switchColored.setOnCheckedChangeListener((buttonView, isChecked) -> demoActivity.updateBottomNavigationColor(isChecked));
+		switchFiveItems.setOnCheckedChangeListener((buttonView, isChecked) -> demoActivity.updateBottomNavigationItems(isChecked));
+		showHideBottomNavigation.setOnCheckedChangeListener((buttonView, isChecked) -> demoActivity.showOrHideBottomNavigation(isChecked));
+		showSelectedBackground.setOnCheckedChangeListener((buttonView, isChecked) -> demoActivity.updateSelectedBackgroundVisibility(isChecked));
 		final List<String> titleStates = new ArrayList<>();
 		for (AHBottomNavigation.TitleState titleState : AHBottomNavigation.TitleState.values()) {
 			titleStates.add(titleState.toString());
 		}
-		ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, titleStates);
-		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerTitleState.setAdapter(spinnerAdapter);
+		// TitleState spinner
+		ArrayAdapter<String> titleStateSpinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, titleStates);
+		titleStateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerTitleState.setAdapter(titleStateSpinnerAdapter);
 		spinnerTitleState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -143,7 +119,7 @@ public class DemoFragment extends Fragment {
 		fragmentContainer = view.findViewById(R.id.fragment_container);
 		recyclerView = view.findViewById(R.id.fragment_demo_recycler_view);
 		recyclerView.setHasFixedSize(true);
-		layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
 		
 		ArrayList<String> itemsData = new ArrayList<>();

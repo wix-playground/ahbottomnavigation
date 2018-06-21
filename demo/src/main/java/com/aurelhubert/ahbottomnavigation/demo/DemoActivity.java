@@ -3,6 +3,7 @@ package com.aurelhubert.ahbottomnavigation.demo;
 import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -86,106 +87,103 @@ public class DemoActivity extends AppCompatActivity {
 		bottomNavigation.manageFloatingActionButtonBehavior(floatingActionButton);
 		bottomNavigation.setTranslucentNavigationEnabled(true);
 
-		bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-			@Override
-			public boolean onTabSelected(int position, boolean wasSelected) {
+		bottomNavigation.setOnTabSelectedListener((position, wasSelected) -> {
 
-				if (currentFragment == null) {
-					currentFragment = adapter.getCurrentFragment();
-				}
+            if (currentFragment == null) {
+                currentFragment = adapter.getCurrentFragment();
+            }
 
-				if (wasSelected) {
-					currentFragment.refresh();
-					return true;
-				}
+            if (wasSelected) {
+                currentFragment.refresh();
+                return true;
+            }
 
-				if (currentFragment != null) {
-					currentFragment.willBeHidden();
-				}
+            if (currentFragment != null) {
+                currentFragment.willBeHidden();
+            }
 
-				viewPager.setCurrentItem(position, false);
-				
-				if (currentFragment == null) {
-					return true;
-				}
-				
-				currentFragment = adapter.getCurrentFragment();
-				currentFragment.willBeDisplayed();
+            viewPager.setCurrentItem(position, false);
 
-				if (position == 1) {
-					bottomNavigation.setNotification("", 1);
+            if (currentFragment == null) {
+                return true;
+            }
 
-					floatingActionButton.setVisibility(View.VISIBLE);
-					floatingActionButton.setAlpha(0f);
-					floatingActionButton.setScaleX(0f);
-					floatingActionButton.setScaleY(0f);
-					floatingActionButton.animate()
-							.alpha(1)
-							.scaleX(1)
-							.scaleY(1)
-							.setDuration(300)
-							.setInterpolator(new OvershootInterpolator())
-							.setListener(new Animator.AnimatorListener() {
-								@Override
-								public void onAnimationStart(Animator animation) {
+            currentFragment = adapter.getCurrentFragment();
+            currentFragment.willBeDisplayed();
 
-								}
+            if (position == 1) {
+                bottomNavigation.setNotification("", 1);
 
-								@Override
-								public void onAnimationEnd(Animator animation) {
-									floatingActionButton.animate()
-											.setInterpolator(new LinearOutSlowInInterpolator())
-											.start();
-								}
+                floatingActionButton.setVisibility(View.VISIBLE);
+                floatingActionButton.setAlpha(0f);
+                floatingActionButton.setScaleX(0f);
+                floatingActionButton.setScaleY(0f);
+                floatingActionButton.animate()
+                        .alpha(1)
+                        .scaleX(1)
+                        .scaleY(1)
+                        .setDuration(300)
+                        .setInterpolator(new OvershootInterpolator())
+                        .setListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
 
-								@Override
-								public void onAnimationCancel(Animator animation) {
+                            }
 
-								}
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                floatingActionButton.animate()
+                                        .setInterpolator(new LinearOutSlowInInterpolator())
+                                        .start();
+                            }
 
-								@Override
-								public void onAnimationRepeat(Animator animation) {
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
 
-								}
-							})
-							.start();
+                            }
 
-				} else {
-					if (floatingActionButton.getVisibility() == View.VISIBLE) {
-						floatingActionButton.animate()
-								.alpha(0)
-								.scaleX(0)
-								.scaleY(0)
-								.setDuration(300)
-								.setInterpolator(new LinearOutSlowInInterpolator())
-								.setListener(new Animator.AnimatorListener() {
-									@Override
-									public void onAnimationStart(Animator animation) {
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
 
-									}
+                            }
+                        })
+                        .start();
 
-									@Override
-									public void onAnimationEnd(Animator animation) {
-										floatingActionButton.setVisibility(View.GONE);
-									}
+            } else {
+                if (floatingActionButton.getVisibility() == View.VISIBLE) {
+                    floatingActionButton.animate()
+                            .alpha(0)
+                            .scaleX(0)
+                            .scaleY(0)
+                            .setDuration(300)
+                            .setInterpolator(new LinearOutSlowInInterpolator())
+                            .setListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
 
-									@Override
-									public void onAnimationCancel(Animator animation) {
-										floatingActionButton.setVisibility(View.GONE);
-									}
+                                }
 
-									@Override
-									public void onAnimationRepeat(Animator animation) {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    floatingActionButton.setVisibility(View.GONE);
+                                }
 
-									}
-								})
-								.start();
-					}
-				}
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+                                    floatingActionButton.setVisibility(View.GONE);
+                                }
 
-				return true;
-			}
-		});
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+
+                                }
+                            })
+                            .start();
+                }
+            }
+
+            return true;
+        });
 		
 		/*
 		bottomNavigation.setOnNavigationPositionListener(new AHBottomNavigation.OnNavigationPositionListener() {
@@ -201,21 +199,18 @@ public class DemoActivity extends AppCompatActivity {
 
 		currentFragment = adapter.getCurrentFragment();
 
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				// Setting custom colors for notification
-				AHNotification notification = new AHNotification.Builder()
-						.setText(":)")
-						.setBackgroundColor(ContextCompat.getColor(DemoActivity.this, R.color.color_notification_back))
-						.setTextColor(ContextCompat.getColor(DemoActivity.this, R.color.color_notification_text))
-						.build();
-				bottomNavigation.setNotification(notification, 1);
-				Snackbar.make(bottomNavigation, "Snackbar with bottom navigation",
-						Snackbar.LENGTH_SHORT).show();
+		handler.postDelayed(() -> {
+            // Setting custom colors for notification
+            AHNotification notification = new AHNotification.Builder()
+                    .setText(":)")
+                    .setBackgroundColor(ContextCompat.getColor(DemoActivity.this, R.color.color_notification_back))
+                    .setTextColor(ContextCompat.getColor(DemoActivity.this, R.color.color_notification_text))
+                    .build();
+            bottomNavigation.setNotification(notification, 1);
+            Snackbar.make(bottomNavigation, "Snackbar with bottom navigation",
+                    Snackbar.LENGTH_SHORT).show();
 
-			}
-		}, 3000);
+        }, 3000);
 		
 		//bottomNavigation.setDefaultBackgroundResource(R.drawable.bottom_navigation_background);
 	}
@@ -307,5 +302,10 @@ public class DemoActivity extends AppCompatActivity {
 	public int getBottomNavigationNbItems() {
 		return bottomNavigation.getItemsCount();
 	}
+
+    public void tab1CustomColors(View view) {
+        bottomNavigation.setAccentColor(0, Color.GREEN);
+        bottomNavigation.setInactiveColor(0, Color.BLUE);
+    }
 
 }

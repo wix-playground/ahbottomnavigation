@@ -48,4 +48,11 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp" />
 
+    <Button
+        android:id="@+id/tab1CustomColors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tab1_custom_colors"
+        android:onClick="tab1CustomColors"/>
+
 </LinearLayout>

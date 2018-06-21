@@ -19,9 +19,12 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  *
  */
+@SuppressWarnings("WeakerAccess")
 public class AHHelper {
 
 	/**
@@ -256,4 +259,21 @@ public class AHHelper {
 		}
 		return (Activity) context;
 	}
+
+	public interface Mapper<T> {
+	    T map(T value);
+    }
+
+    public static <T> void map(ArrayList<T> al, Mapper<T> mapper) {
+	    if (al == null) return;
+        for (int i = 0; i < al.size(); i++) {
+            al.set(i, mapper.map(al.get(i)));
+        }
+    }
+
+    public static <T> void fill(ArrayList<T> al, int count, T value) {
+        for (int i = 0; i < count; i++) {
+            al.add(value);
+        }
+    }
 }
