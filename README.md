@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/wix-playground/ahbottomnavigation.svg)](https://jitpack.io/#wix-playground/ahbottomnavigation)
 
 # AHBottomNavigation
 Library to implement the Bottom Navigation component from Material Design guidelines (minSdkVersion=14).
