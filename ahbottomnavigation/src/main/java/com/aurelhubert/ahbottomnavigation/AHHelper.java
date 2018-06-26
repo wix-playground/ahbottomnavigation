@@ -130,19 +130,21 @@ public class AHHelper {
 	/**
 	 * Update text color with animation
 	 */
-	public static void updateTextColor(final TextView textView, @ColorInt int fromColor,
-	                                   @ColorInt int toColor) {
-		ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, toColor);
-		colorAnimation.setDuration(150);
-		colorAnimation.addUpdateListener(animator -> textView.setTextColor((Integer) animator.getAnimatedValue()));
-		colorAnimation.start();
+	public static void updateTextColor(final AHTextView textView, @Nullable Integer fromColor, @Nullable Integer toColor) {
+        if (fromColor != null && toColor != null) {
+            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, toColor);
+            colorAnimation.setDuration(150);
+            colorAnimation.addUpdateListener(animator -> textView.setTextColor((Integer) animator.getAnimatedValue()));
+            colorAnimation.start();
+        } else {
+            textView.setTextColor(toColor);
+        }
 	}
 
 	/**
 	 * Update text color with animation
 	 */
-	public static void updateViewBackgroundColor(final View view, @ColorInt int fromColor,
-	                                             @ColorInt int toColor) {
+	public static void updateViewBackgroundColor(final View view, @ColorInt int fromColor, @ColorInt int toColor) {
 		ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, toColor);
 		colorAnimation.setDuration(150);
 		colorAnimation.addUpdateListener(animator -> view.setBackgroundColor((Integer) animator.getAnimatedValue()));
