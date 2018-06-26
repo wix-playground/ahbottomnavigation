@@ -98,8 +98,8 @@ public class AHBottomNavigation extends FrameLayout {
 	private boolean hideBottomNavigationWithAnimation = false;
 	private boolean soundEffectsEnabled = true;
 
-	// Variables (Styles)
-	private Typeface titleTypeface;
+    // Variables (Styles)
+    private ArrayList<Typeface> titleTypeface = new ArrayList<>();
 	private int defaultBackgroundColor = Color.WHITE;
 	private int defaultBackgroundResource = 0;
 	private ArrayList<Integer> iconActiveColor = new ArrayList<>(MAX_ITEMS);
@@ -207,6 +207,8 @@ public class AHBottomNavigation extends FrameLayout {
         fill(titleActiveColor, MAX_ITEMS, null);
         fill(titleInactiveColor, MAX_ITEMS, null);
         fill(titleDisableColor, MAX_ITEMS, null);
+
+        fill(titleTypeface, MAX_ITEMS, null);
 
 		// Colors for colored bottom navigation
         fill(coloredTitleColorActive, MAX_ITEMS, ContextCompat.getColor(context, R.color.colorBottomNavigationActiveColored));
@@ -406,9 +408,7 @@ public class AHBottomNavigation extends FrameLayout {
 			icon.setImageDrawable(item.getDrawable(context));
 			title.setText(item.getTitle(context));
 
-			if (titleTypeface != null) {
-				title.setTypeface(titleTypeface);
-			}
+            title.setTypeface(titleTypeface.get(i));
 
 			if (titleState == TitleState.ALWAYS_SHOW && items.size() > MIN_ITEMS) {
 				container.setPadding(0, container.getPaddingTop(), 0, container.getPaddingBottom());
@@ -521,9 +521,7 @@ public class AHBottomNavigation extends FrameLayout {
 				title.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleActiveTextSize);
 			}
 
-			if (titleTypeface != null) {
-				title.setTypeface(titleTypeface);
-			}
+            title.setTypeface(titleTypeface.get(i));
 
 			if (i == currentItem) {
 				if (selectedBackgroundVisible) {
@@ -1050,6 +1048,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param activeColor The new accent color
 	 */
 	public void setIconActiveColor(int index, @Nullable Integer activeColor) {
+	    if (iconActiveColor.get(index).equals(activeColor)) return;
 		iconActiveColor.set(index, activeColor);
 		createItems();
 	}
@@ -1060,6 +1059,7 @@ public class AHBottomNavigation extends FrameLayout {
      * @param activeColor The new accent color
      */
     public void setTitleActiveColor(int index, @Nullable Integer activeColor) {
+        if (titleActiveColor.get(index).equals(activeColor)) return;
         titleActiveColor.set(index, activeColor);
         createItems();
     }
@@ -1088,6 +1088,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param inactiveColor The inactive color
 	 */
 	public void setIconInactiveColor(int index, @Nullable Integer inactiveColor) {
+	    if (iconInactiveColor.get(index).equals(inactiveColor)) return;
 		iconInactiveColor.set(index, inactiveColor);
 		createItems();
 	}
@@ -1098,6 +1099,7 @@ public class AHBottomNavigation extends FrameLayout {
      * @param inactiveColor The inactive color
      */
     public void setTitleInactiveColor(int index, @Nullable Integer inactiveColor) {
+        if (titleInactiveColor.get(index).equals(inactiveColor))
         titleInactiveColor.set(index, inactiveColor);
         createItems();
     }
@@ -1127,8 +1129,9 @@ public class AHBottomNavigation extends FrameLayout {
 	 *
 	 * @param typeface Typeface
 	 */
-	public void setTitleTypeface(Typeface typeface) {
-		this.titleTypeface = typeface;
+	public void setTitleTypeface(int index, @Nullable Typeface typeface) {
+	    if (titleTypeface.get(index) == typeface) return;
+		titleTypeface.set(index, typeface);
 		createItems();
 	}
 
@@ -1448,7 +1451,8 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param textColor int
 	 */
 	public void setNotificationTextColor(@ColorInt int textColor) {
-		this.notificationTextColor = textColor;
+	    if (notificationTextColor == textColor) return;
+		notificationTextColor = textColor;
 		updateNotifications(true, UPDATE_ALL_NOTIFICATIONS);
 	}
 
@@ -1478,7 +1482,8 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param color int
 	 */
 	public void setNotificationBackgroundColor(@ColorInt int color) {
-		this.notificationBackgroundColor = color;
+	    if (notificationBackgroundColor == color) return;
+		notificationBackgroundColor = color;
 		updateNotifications(true, UPDATE_ALL_NOTIFICATIONS);
 	}
 
@@ -1502,7 +1507,7 @@ public class AHBottomNavigation extends FrameLayout {
 		updateNotifications(true, UPDATE_ALL_NOTIFICATIONS);
 	}
 
-	public void setNotificationAnimationDuration(long notificationAnimationDuration){
+	public void setNotificationAnimationDuration(long notificationAnimationDuration) {
 		this.notificationAnimationDuration = notificationAnimationDuration;
 		updateNotifications(true, UPDATE_ALL_NOTIFICATIONS);
 	}
