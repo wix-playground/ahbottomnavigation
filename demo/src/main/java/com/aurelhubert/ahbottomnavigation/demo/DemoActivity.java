@@ -42,8 +42,7 @@ public class DemoActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boolean enabledTranslucentNavigation = getSharedPreferences("shared", Context.MODE_PRIVATE)
-				.getBoolean("translucentNavigation", false);
+		boolean enabledTranslucentNavigation = getSharedPreferences("shared", Context.MODE_PRIVATE).getBoolean("translucentNavigation", false);
 		setTheme(enabledTranslucentNavigation ? R.style.AppTheme_TranslucentNavigation : R.style.AppTheme);
 		setContentView(R.layout.activity_home);
 		initUI();
@@ -304,8 +303,17 @@ public class DemoActivity extends AppCompatActivity {
 	}
 
     public void tab1CustomColors(View view) {
-        bottomNavigation.setAccentColor(0, Color.GREEN);
-        bottomNavigation.setInactiveColor(0, Color.BLUE);
+        bottomNavigation.setIconActiveColor(0, Color.GREEN);
+        bottomNavigation.setTitleActiveColor(0, Color.GREEN);
+        bottomNavigation.setIconInactiveColor(0, Color.BLUE);
+        bottomNavigation.setTitleInactiveColor(0, Color.BLUE);
+    }
+
+    public void tab2DifferentColors(View view) {
+        bottomNavigation.setIconActiveColor(1, Color.MAGENTA);
+        bottomNavigation.setTitleActiveColor(1, Color.YELLOW);
+        bottomNavigation.setIconInactiveColor(1, Color.parseColor("#80e27e"));
+        bottomNavigation.setTitleInactiveColor(1, Color.parseColor("#4dd0e1"));
     }
 
 }
