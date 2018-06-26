@@ -252,4 +252,8 @@ public class AHHelper {
             al.add(value);
         }
     }
+
+    public static boolean equals(@Nullable Integer o1, @Nullable Integer o2) {
+        return o1 == null && o2 == null || o1 != null && o2 != null && o1.equals(o2);
+    }
 }

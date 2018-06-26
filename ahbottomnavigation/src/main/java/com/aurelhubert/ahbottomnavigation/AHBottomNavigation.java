@@ -1048,7 +1048,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param activeColor The new accent color
 	 */
 	public void setIconActiveColor(int index, @Nullable Integer activeColor) {
-	    if (iconActiveColor.get(index) != null && iconActiveColor.get(index).equals(activeColor)) return;
+	    if (AHHelper.equals(iconActiveColor.get(index), activeColor)) return;
 		iconActiveColor.set(index, activeColor);
 		createItems();
 	}
@@ -1059,7 +1059,7 @@ public class AHBottomNavigation extends FrameLayout {
      * @param activeColor The new accent color
      */
     public void setTitleActiveColor(int index, @Nullable Integer activeColor) {
-        if (titleActiveColor.get(index) != null && titleActiveColor.get(index).equals(activeColor)) return;
+        if (AHHelper.equals(titleActiveColor.get(index), activeColor)) return;
         titleActiveColor.set(index, activeColor);
         createItems();
     }
@@ -1088,7 +1088,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param inactiveColor The inactive color
 	 */
 	public void setIconInactiveColor(int index, @Nullable Integer inactiveColor) {
-	    if (iconInactiveColor.get(index) != null && iconInactiveColor.get(index).equals(inactiveColor)) return;
+	    if (AHHelper.equals(iconInactiveColor.get(index), inactiveColor)) return;
 		iconInactiveColor.set(index, inactiveColor);
 		createItems();
 	}
@@ -1099,7 +1099,7 @@ public class AHBottomNavigation extends FrameLayout {
      * @param inactiveColor The inactive color
      */
     public void setTitleInactiveColor(int index, @Nullable Integer inactiveColor) {
-        if (titleInactiveColor.get(index) != null && titleInactiveColor.get(index).equals(inactiveColor))
+        if (AHHelper.equals(titleInactiveColor.get(index), inactiveColor)) return;
         titleInactiveColor.set(index, inactiveColor);
         createItems();
     }
