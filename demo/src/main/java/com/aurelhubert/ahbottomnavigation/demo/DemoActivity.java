@@ -72,9 +72,9 @@ public class DemoActivity extends AppCompatActivity {
 			navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.bottom_navigation_menu_3);
 			navigationAdapter.setupWithBottomNavigation(bottomNavigation, tabColors);
 		} else {
-			AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_apps_black_24dp, R.color.color_tab_1);
-			AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_maps_local_bar, R.color.color_tab_2);
-			AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_maps_local_restaurant, R.color.color_tab_3);
+			AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_apps_black_24dp);
+			AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_maps_local_bar);
+			AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_maps_local_restaurant);
 
 			bottomNavigationItems.add(item1);
 			bottomNavigationItems.add(item2);
@@ -212,6 +212,7 @@ public class DemoActivity extends AppCompatActivity {
         }, 3000);
 		
 		//bottomNavigation.setDefaultBackgroundResource(R.drawable.bottom_navigation_background);
+        bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#d7ffd9"));
 	}
 
 	/**
@@ -316,4 +317,10 @@ public class DemoActivity extends AppCompatActivity {
         bottomNavigation.setTitleInactiveColor(1, Color.parseColor("#4dd0e1"));
     }
 
+    public void tab3SelectedIconColor(View view) {
+        bottomNavigation.setIconActiveColor(2, Color.parseColor("#6a1b9a"));
+//        bottomNavigation.setIconInactiveColor(2, Color.parseColor("#6a1b9a"));
+//        bottomNavigation.setTitleActiveColor(2, Color.parseColor("#6a1b9a"));
+//        bottomNavigation.setTitleInactiveColor(2, Color.parseColor("#6a1b9a"));
+    }
 }

@@ -66,6 +66,17 @@ public class AHBottomNavigationItem {
 		this.drawableRes = drawableRes;
 		this.colorRes = colorRes;
 	}
+
+    /**
+     * Constructor
+     *
+     * @param titleRes    String resource
+     * @param drawableRes Drawable resource
+     */
+    public AHBottomNavigationItem(@StringRes int titleRes, @DrawableRes int drawableRes) {
+        this.titleRes = titleRes;
+        this.drawableRes = drawableRes;
+    }
 	
 	/**
 	 * Constructor
@@ -90,8 +101,8 @@ public class AHBottomNavigationItem {
 		this.drawable = drawable;
 		this.color = color;
 	}
-	
-	public String getTitle(Context context) {
+
+    public String getTitle(Context context) {
 		if (titleRes != 0) {
 			return context.getString(titleRes);
 		}

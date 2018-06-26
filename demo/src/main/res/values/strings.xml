@@ -13,5 +13,6 @@
     <string name="menu_5">Menu 5</string>
     <string name="tab1_custom_colors">Tab1 custom colors</string>
     <string name="tab2_different_colors">Tab2 different colors</string>
+    <string name="tab3_selected_icon_color">Tab3 colors</string>
 
 </resources>

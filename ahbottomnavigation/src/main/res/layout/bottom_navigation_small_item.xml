@@ -16,7 +16,7 @@
         android:layout_marginTop="@dimen/bottom_navigation_small_margin_top"
         android:gravity="center" />
 
-    <TextView
+    <com.aurelhubert.ahbottomnavigation.AHTextView
         android:id="@+id/bottom_navigation_small_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         android:textSize="14sp"
         tools:text="Label One" />
 
-    <TextView
+    <com.aurelhubert.ahbottomnavigation.AHTextView
         android:id="@+id/bottom_navigation_notification"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/bottom_navigation_notification_height"

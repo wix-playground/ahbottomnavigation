@@ -15,6 +15,7 @@ import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -36,7 +37,6 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotificationHelper;
@@ -200,13 +200,13 @@ public class AHBottomNavigation extends FrameLayout {
 		resources = this.context.getResources();
 
         // Icon colors
-        fill(iconActiveColor, MAX_ITEMS, ContextCompat.getColor(context, R.color.colorBottomNavigationAccent));
-        fill(iconInactiveColor, MAX_ITEMS, ContextCompat.getColor(context, R.color.colorBottomNavigationInactive));
-        fill(iconDisableColor, MAX_ITEMS, ContextCompat.getColor(context, R.color.colorBottomNavigationDisable));
+        fill(iconActiveColor, MAX_ITEMS, null);
+        fill(iconInactiveColor, MAX_ITEMS, null);
+        fill(iconDisableColor, MAX_ITEMS, null);
         // Title colors
-        fill(titleActiveColor, MAX_ITEMS, ContextCompat.getColor(context, R.color.colorBottomNavigationAccent));
-        fill(titleInactiveColor, MAX_ITEMS, ContextCompat.getColor(context, R.color.colorBottomNavigationInactive));
-        fill(titleDisableColor, MAX_ITEMS, ContextCompat.getColor(context, R.color.colorBottomNavigationDisable));
+        fill(titleActiveColor, MAX_ITEMS, null);
+        fill(titleInactiveColor, MAX_ITEMS, null);
+        fill(titleDisableColor, MAX_ITEMS, null);
 
 		// Colors for colored bottom navigation
         fill(coloredTitleColorActive, MAX_ITEMS, ContextCompat.getColor(context, R.color.colorBottomNavigationActiveColored));
@@ -400,8 +400,8 @@ public class AHBottomNavigation extends FrameLayout {
 			View view = inflater.inflate(R.layout.bottom_navigation_item, this, false);
 			FrameLayout container = view.findViewById(R.id.bottom_navigation_container);
 			ImageView icon = view.findViewById(R.id.bottom_navigation_item_icon);
-			TextView title = view.findViewById(R.id.bottom_navigation_item_title);
-			TextView notification = view.findViewById(R.id.bottom_navigation_notification);
+			AHTextView title = view.findViewById(R.id.bottom_navigation_item_title);
+            AHTextView notification = view.findViewById(R.id.bottom_navigation_notification);
 
 			icon.setImageDrawable(item.getDrawable(context));
 			title.setText(item.getTitle(context));
@@ -509,8 +509,8 @@ public class AHBottomNavigation extends FrameLayout {
 
 			View view = inflater.inflate(R.layout.bottom_navigation_small_item, this, false);
 			ImageView icon = view.findViewById(R.id.bottom_navigation_small_item_icon);
-			TextView title = view.findViewById(R.id.bottom_navigation_small_item_title);
-			TextView notification = view.findViewById(R.id.bottom_navigation_notification);
+            AHTextView title = view.findViewById(R.id.bottom_navigation_small_item_title);
+            AHTextView notification = view.findViewById(R.id.bottom_navigation_notification);
 			icon.setImageDrawable(item.getDrawable(context));
 
 			if (titleState != TitleState.ALWAYS_HIDE) {
@@ -635,16 +635,16 @@ public class AHBottomNavigation extends FrameLayout {
 			}
 
 			if (i == itemIndex) {
-				final TextView title = view.findViewById(R.id.bottom_navigation_item_title);
+				final AHTextView title = view.findViewById(R.id.bottom_navigation_item_title);
 				final ImageView icon = view.findViewById(R.id.bottom_navigation_item_icon);
-				final TextView notification = view.findViewById(R.id.bottom_navigation_notification);
+				final AHTextView notification = view.findViewById(R.id.bottom_navigation_notification);
 
 				icon.setSelected(true);
 				AHHelper.updateTopMargin(icon, inactiveMarginTop, activeMarginTop);
 				AHHelper.updateLeftMargin(notification, notificationInactiveMarginLeft, notificationActiveMarginLeft);
 				AHHelper.updateTextColor(title, titleInactiveColor.get(i), titleActiveColor.get(i));
 				AHHelper.updateTextSize(title, inactiveSize, activeSize);
-				AHHelper.updateDrawableColor(context, items.get(itemIndex).getDrawable(context), icon, iconInactiveColor.get(i), iconActiveColor.get(i), forceTint);
+				AHHelper.updateDrawableColor(items.get(itemIndex).getDrawable(context), icon, iconInactiveColor.get(i), iconActiveColor.get(i), forceTint);
 
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && colored) {
 					int finalRadius = Math.max(getWidth(), getHeight());
@@ -693,16 +693,16 @@ public class AHBottomNavigation extends FrameLayout {
 				}
 
 			} else if (i == currentItem) {
-				final TextView title = view.findViewById(R.id.bottom_navigation_item_title);
+				final AHTextView title = view.findViewById(R.id.bottom_navigation_item_title);
 				final ImageView icon = view.findViewById(R.id.bottom_navigation_item_icon);
-				final TextView notification = view.findViewById(R.id.bottom_navigation_notification);
+				final AHTextView notification = view.findViewById(R.id.bottom_navigation_notification);
 
 				icon.setSelected(false);
 				AHHelper.updateTopMargin(icon, activeMarginTop, inactiveMarginTop);
 				AHHelper.updateLeftMargin(notification, notificationActiveMarginLeft, notificationInactiveMarginLeft);
 				AHHelper.updateTextColor(title, titleActiveColor.get(i), titleInactiveColor.get(i));
 				AHHelper.updateTextSize(title, activeSize, inactiveSize);
-				AHHelper.updateDrawableColor(context, items.get(currentItem).getDrawable(context), icon, iconActiveColor.get(i), iconInactiveColor.get(i), forceTint);
+				AHHelper.updateDrawableColor(items.get(currentItem).getDrawable(context), icon, iconActiveColor.get(i), iconInactiveColor.get(i), forceTint);
 			}
 		}
 
@@ -752,9 +752,9 @@ public class AHBottomNavigation extends FrameLayout {
 			if (i == itemIndex) {
 
 				final FrameLayout container = view.findViewById(R.id.bottom_navigation_small_container);
-				final TextView title = view.findViewById(R.id.bottom_navigation_small_item_title);
+				final AHTextView title = view.findViewById(R.id.bottom_navigation_small_item_title);
 				final ImageView icon = view.findViewById(R.id.bottom_navigation_small_item_icon);
-				final TextView notification = view.findViewById(R.id.bottom_navigation_notification);
+				final AHTextView notification = view.findViewById(R.id.bottom_navigation_notification);
 
 				icon.setSelected(true);
 
@@ -767,7 +767,7 @@ public class AHBottomNavigation extends FrameLayout {
 				}
 
 				AHHelper.updateAlpha(title, 0, 1);
-				AHHelper.updateDrawableColor(context, items.get(itemIndex).getDrawable(context), icon, iconInactiveColor.get(i), iconActiveColor.get(i), forceTint);
+				AHHelper.updateDrawableColor(items.get(itemIndex).getDrawable(context), icon, iconInactiveColor.get(i), iconActiveColor.get(i), forceTint);
 
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && colored) {
 					int finalRadius = Math.max(getWidth(), getHeight());
@@ -818,9 +818,9 @@ public class AHBottomNavigation extends FrameLayout {
 			} else if (i == currentItem) {
 
 				final View container = view.findViewById(R.id.bottom_navigation_small_container);
-				final TextView title = view.findViewById(R.id.bottom_navigation_small_item_title);
+				final AHTextView title = view.findViewById(R.id.bottom_navigation_small_item_title);
 				final ImageView icon = view.findViewById(R.id.bottom_navigation_small_item_icon);
-				final TextView notification = view.findViewById(R.id.bottom_navigation_notification);
+				final AHTextView notification = view.findViewById(R.id.bottom_navigation_notification);
 
 				icon.setSelected(false);
 
@@ -833,7 +833,7 @@ public class AHBottomNavigation extends FrameLayout {
 				}
 
 				AHHelper.updateAlpha(title, 1, 0);
-				AHHelper.updateDrawableColor(context, items.get(currentItem).getDrawable(context), icon, iconActiveColor.get(i), iconInactiveColor.get(i), forceTint);
+				AHHelper.updateDrawableColor(items.get(currentItem).getDrawable(context), icon, iconActiveColor.get(i), iconInactiveColor.get(i), forceTint);
 			}
 		}
 
@@ -867,7 +867,7 @@ public class AHBottomNavigation extends FrameLayout {
 			final int currentTextColor = AHNotificationHelper.getTextColor(notificationItem, notificationTextColor);
 			final int currentBackgroundColor = AHNotificationHelper.getBackgroundColor(notificationItem, notificationBackgroundColor);
 
-			TextView notification = views.get(i).findViewById(R.id.bottom_navigation_notification);
+			AHTextView notification = views.get(i).findViewById(R.id.bottom_navigation_notification);
 
 			String currentValue = notification.getText().toString();
 			boolean animate = !currentValue.equals(String.valueOf(notificationItem.getText()));
@@ -1040,7 +1040,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 *
 	 * @return The default accent color
 	 */
-	public int getIconActiveColor(int index) {
+	public @Nullable Integer getIconActiveColor(int index) {
 		return iconActiveColor.get(index);
 	}
 
@@ -1049,7 +1049,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 *
 	 * @param activeColor The new accent color
 	 */
-	public void setIconActiveColor(int index, int activeColor) {
+	public void setIconActiveColor(int index, @Nullable Integer activeColor) {
 		iconActiveColor.set(index, activeColor);
 		createItems();
 	}
@@ -1059,7 +1059,7 @@ public class AHBottomNavigation extends FrameLayout {
      *
      * @param activeColor The new accent color
      */
-    public void setTitleActiveColor(int index, int activeColor) {
+    public void setTitleActiveColor(int index, @Nullable Integer activeColor) {
         titleActiveColor.set(index, activeColor);
         createItems();
     }
@@ -1069,7 +1069,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 *
 	 * @return The inactive color
 	 */
-	public int getIconInactiveColor(int index) {
+	public @Nullable Integer getIconInactiveColor(int index) {
 		return iconInactiveColor.get(index);
 	}
 
@@ -1078,7 +1078,7 @@ public class AHBottomNavigation extends FrameLayout {
      *
      * @return The inactive color
      */
-    public int getTitleInactiveColor(int index) {
+    public @Nullable Integer getTitleInactiveColor(int index) {
         return titleInactiveColor.get(index);
     }
 
@@ -1087,7 +1087,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 *
 	 * @param inactiveColor The inactive color
 	 */
-	public void setIconInactiveColor(int index, int inactiveColor) {
+	public void setIconInactiveColor(int index, @Nullable Integer inactiveColor) {
 		iconInactiveColor.set(index, inactiveColor);
 		createItems();
 	}
@@ -1097,7 +1097,7 @@ public class AHBottomNavigation extends FrameLayout {
      *
      * @param inactiveColor The inactive color
      */
-    public void setTitleInactiveColor(int index, int inactiveColor) {
+    public void setTitleInactiveColor(int index, @Nullable Integer inactiveColor) {
         titleInactiveColor.set(index, inactiveColor);
         createItems();
     }

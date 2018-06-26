@@ -67,4 +67,16 @@
             android:onClick="tab1CustomColors"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/tab3SelectedIconColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab3_selected_icon_color"
+            android:onClick="tab3SelectedIconColor"/>
+    </LinearLayout>
+
 </LinearLayout>
