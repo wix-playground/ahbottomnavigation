@@ -323,4 +323,9 @@ public class DemoActivity extends AppCompatActivity {
 //        bottomNavigation.setTitleActiveColor(2, Color.parseColor("#6a1b9a"));
 //        bottomNavigation.setTitleInactiveColor(2, Color.parseColor("#6a1b9a"));
     }
+
+    public void setTab3FontSize(View view) {
+        bottomNavigation.setTitleActiveTextSizeInSp(2, 19);
+        bottomNavigation.setTitleInactiveTextSizeInSp(2, 16);
+    }
 }

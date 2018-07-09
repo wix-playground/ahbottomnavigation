@@ -77,6 +77,11 @@
             android:layout_height="wrap_content"
             android:text="@string/tab3_selected_icon_color"
             android:onClick="tab3SelectedIconColor"/>
+        <Button
+            android:id="@+id/fontSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fontSize"
+            android:onClick="setTab3FontSize"/>
     </LinearLayout>
-
 </LinearLayout>
