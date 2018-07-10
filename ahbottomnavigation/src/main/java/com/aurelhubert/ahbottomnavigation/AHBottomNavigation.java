@@ -1140,8 +1140,8 @@ public class AHBottomNavigation extends FrameLayout {
 	/**
 	 * Set title active text size in pixels
 	 */
-	public void setTitleActiveTextSize(int index, float activeSize) {
-	    if (titleActiveTextSize.get(index) != null && titleActiveTextSize.get(index) == activeSize) return;
+	public void setTitleActiveTextSize(int index, Float activeSize) {
+        if (AHHelper.equals(titleActiveTextSize.get(index), activeSize)) return;
         titleActiveTextSize.set(index, activeSize);
 		createItems();
 	}
@@ -1149,8 +1149,8 @@ public class AHBottomNavigation extends FrameLayout {
     /**
      * Set title inactive text size in pixels
      */
-    public void setTitleInactiveTextSize(int index, float inactiveSize) {
-        if (titleInactiveTextSize.get(index) != null && titleInactiveTextSize.get(index) == inactiveSize) return;
+    public void setTitleInactiveTextSize(int index, Float inactiveSize) {
+        if (AHHelper.equals(titleInactiveTextSize.get(index), inactiveSize)) return;
         titleInactiveTextSize.set(index, inactiveSize);
         createItems();
     }
@@ -1160,7 +1160,8 @@ public class AHBottomNavigation extends FrameLayout {
 	 *
 	 * @param activeSize in sp
 	 */
-	public void setTitleActiveTextSizeInSp(int index, float activeSize) {
+	public void setTitleActiveTextSizeInSp(int index, Float activeSize) {
+        if (AHHelper.equals(titleActiveTextSize.get(index), activeSize)) return;
 		this.titleActiveTextSize.set(index, (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, activeSize, resources.getDisplayMetrics())));
 		createItems();
 	}
@@ -1170,7 +1171,8 @@ public class AHBottomNavigation extends FrameLayout {
      *
      * @param inactiveSize in sp
      */
-    public void setTitleInactiveTextSizeInSp(int index, float inactiveSize) {
+    public void setTitleInactiveTextSizeInSp(int index, Float inactiveSize) {
+        if (AHHelper.equals(titleInactiveTextSize.get(index), inactiveSize)) return;
         this.titleInactiveTextSize.set(index, (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, inactiveSize, resources.getDisplayMetrics())));
         createItems();
     }

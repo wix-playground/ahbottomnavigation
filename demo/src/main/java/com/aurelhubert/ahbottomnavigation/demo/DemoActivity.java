@@ -325,7 +325,7 @@ public class DemoActivity extends AppCompatActivity {
     }
 
     public void setTab3FontSize(View view) {
-        bottomNavigation.setTitleActiveTextSizeInSp(2, 19);
-        bottomNavigation.setTitleInactiveTextSizeInSp(2, 16);
+        bottomNavigation.setTitleActiveTextSizeInSp(2, (float) 19);
+        bottomNavigation.setTitleInactiveTextSizeInSp(2, null);
     }
 }
