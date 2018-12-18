@@ -258,7 +258,7 @@ public class AHBottomNavigation extends FrameLayout {
 	/**
 	 * Create the items in the bottom navigation
 	 */
-	private void createItems() {
+	protected void createItems() {
 		if (items.size() < MIN_ITEMS) {
 			Log.w(TAG, "The items list should have at least 3 items");
 		} else if (items.size() > MAX_ITEMS) {
