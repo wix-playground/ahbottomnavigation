@@ -19,7 +19,8 @@ public class AHBottomNavigationItem {
 	
 	private String title = "";
 	private Drawable drawable;
-	private int color = Color.GRAY;
+    private String contentDescription;
+    private int color = Color.GRAY;
 	
 	private
 	@StringRes
@@ -88,6 +89,19 @@ public class AHBottomNavigationItem {
 		this.title = title;
 		this.drawable = drawable;
 	}
+
+    /**
+     * Constructor
+     *
+     * @param title    String
+     * @param drawable Drawable
+     * @param contentDescription String
+     */
+    public AHBottomNavigationItem(String title, Drawable drawable, String contentDescription) {
+        this.title = title;
+        this.drawable = drawable;
+        this.contentDescription = contentDescription;
+    }
 	
 	/**
 	 * Constructor
@@ -156,4 +170,8 @@ public class AHBottomNavigationItem {
 		this.drawable = drawable;
 		this.drawableRes = 0;
 	}
+
+    public String getContentDescription() {
+        return contentDescription;
+    }
 }
