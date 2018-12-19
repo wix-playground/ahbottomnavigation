@@ -453,8 +453,8 @@ public class AHBottomNavigation extends FrameLayout {
 				title.setTextColor(titleDisableColor.get(i));
 			}
 
-            if (item.getContentDescription() != null) {
-			    view.setContentDescription(item.getContentDescription());
+            if (item.getTag() != null) {
+			    view.setTag(item.getTag());
             }
 
 			LayoutParams params = new LayoutParams((int) itemWidth, (int) height);
@@ -599,8 +599,8 @@ public class AHBottomNavigation extends FrameLayout {
 				width = (int) (itemWidth * 1.16);
 			}
 
-            if (item.getContentDescription() != null) {
-                view.setContentDescription(item.getContentDescription());
+            if (item.getTag() != null) {
+                view.setTag(item.getTag());
             }
 
 			LayoutParams params = new LayoutParams(width, (int) height);
