@@ -16,12 +16,13 @@ import android.support.v7.content.res.AppCompatResources;
  * The item is display in the AHBottomNavigation layout
  */
 public class AHBottomNavigationItem {
-	
+
 	private String title = "";
 	private Drawable drawable;
-    private String tag;
-    private int color = Color.GRAY;
-	
+	private Drawable selectedDrawable;
+	private String tag;
+	private int color = Color.GRAY;
+
 	private
 	@StringRes
 	int titleRes = 0;
@@ -31,7 +32,10 @@ public class AHBottomNavigationItem {
 	private
 	@ColorRes
 	int colorRes = 0;
-	
+	private
+	@DrawableRes
+	int selectedDrawableRes = 0;
+
 	/**
 	 * Constructor
 	 *
@@ -42,7 +46,7 @@ public class AHBottomNavigationItem {
 		this.title = title;
 		this.drawableRes = resource;
 	}
-	
+
 	/**
 	 * @param title    Title
 	 * @param resource Drawable resource
@@ -54,7 +58,7 @@ public class AHBottomNavigationItem {
 		this.drawableRes = resource;
 		this.color = color;
 	}
-	
+
 	/**
 	 * Constructor
 	 *
@@ -68,17 +72,17 @@ public class AHBottomNavigationItem {
 		this.colorRes = colorRes;
 	}
 
-    /**
-     * Constructor
-     *
-     * @param titleRes    String resource
-     * @param drawableRes Drawable resource
-     */
-    public AHBottomNavigationItem(@StringRes int titleRes, @DrawableRes int drawableRes) {
-        this.titleRes = titleRes;
-        this.drawableRes = drawableRes;
-    }
-	
+	/**
+	 * Constructor
+	 *
+	 * @param titleRes    String resource
+	 * @param drawableRes Drawable resource
+	 */
+	public AHBottomNavigationItem(@StringRes int titleRes, @DrawableRes int drawableRes) {
+		this.titleRes = titleRes;
+		this.drawableRes = drawableRes;
+	}
+
 	/**
 	 * Constructor
 	 *
@@ -90,19 +94,33 @@ public class AHBottomNavigationItem {
 		this.drawable = drawable;
 	}
 
-    /**
-     * Constructor
-     *
-     * @param title    String
-     * @param drawable Drawable
-     * @param tag String
-     */
-    public AHBottomNavigationItem(String title, Drawable drawable, String tag) {
-        this.title = title;
-        this.drawable = drawable;
-        this.tag = tag;
-    }
-	
+	/**
+	 * Constructor
+	 *
+	 * @param title    String
+	 * @param drawable Drawable
+	 * @param tag String
+	 */
+	public AHBottomNavigationItem(String title, Drawable drawable, String tag) {
+		this.title = title;
+		this.drawable = drawable;
+		this.tag = tag;
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param title    String
+	 * @param drawable Drawable
+	 * @param tag String
+	 */
+	public AHBottomNavigationItem(String title, Drawable drawable, Drawable selectedDrawable,String tag) {
+		this.title = title;
+		this.drawable = drawable;
+		this.selectedDrawable = selectedDrawable;
+		this.tag = tag;
+	}
+
 	/**
 	 * Constructor
 	 *
@@ -116,40 +134,40 @@ public class AHBottomNavigationItem {
 		this.color = color;
 	}
 
-    public String getTitle(Context context) {
+	public String getTitle(Context context) {
 		if (titleRes != 0) {
 			return context.getString(titleRes);
 		}
 		return title;
 	}
-	
+
 	public void setTitle(String title) {
 		this.title = title;
 		this.titleRes = 0;
 	}
-	
+
 	public void setTitle(@StringRes int titleRes) {
 		this.titleRes = titleRes;
 		this.title = "";
 	}
-	
+
 	public int getColor(Context context) {
 		if (colorRes != 0) {
 			return ContextCompat.getColor(context, colorRes);
 		}
 		return color;
 	}
-	
+
 	public void setColor(@ColorInt int color) {
 		this.color = color;
 		this.colorRes = 0;
 	}
-	
+
 	public void setColorRes(@ColorRes int colorRes) {
 		this.colorRes = colorRes;
 		this.color = 0;
 	}
-	
+
 	public Drawable getDrawable(Context context) {
 		if (drawableRes != 0) {
 			try {
@@ -160,18 +178,43 @@ public class AHBottomNavigationItem {
 		}
 		return drawable;
 	}
-	
+
 	public void setDrawable(@DrawableRes int drawableRes) {
 		this.drawableRes = drawableRes;
 		this.drawable = null;
 	}
-	
+
 	public void setDrawable(Drawable drawable) {
 		this.drawable = drawable;
 		this.drawableRes = 0;
 	}
 
-    public String getTag() {
-        return tag;
-    }
+	public Drawable getSelectedDrawable(Context context) {
+		if (selectedDrawableRes != 0) {
+			try {
+				return AppCompatResources.getDrawable(context, selectedDrawableRes);
+			} catch (Resources.NotFoundException e) {
+				return ContextCompat.getDrawable(context, selectedDrawableRes);
+			}
+		}
+		if (selectedDrawable != null) {
+			return selectedDrawable;
+		}
+		return drawable;
+	}
+
+
+	public void setSelectedDrawable(@DrawableRes int drawableRes) {
+		this.selectedDrawableRes = drawableRes;
+		this.selectedDrawable = null;
+	}
+
+	public void setSelectedDrawable(Drawable drawable) {
+		this.selectedDrawable = drawable;
+		this.selectedDrawableRes = 0;
+	}
+
+	public String getTag() {
+		return tag;
+	}
 }
