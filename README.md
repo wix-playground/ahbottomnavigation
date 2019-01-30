@@ -65,6 +65,10 @@ AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bot
 AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_maps_place, R.color.color_tab_1);
 AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_maps_local_bar, R.color.color_tab_2);
 AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_maps_local_restaurant, R.color.color_tab_3);
+// or
+AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.ic_maps_place, R.drawable.ic_maps_place_selected, "tag1");
+AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.ic_maps_local_bar, R.drawable.ic_maps_place_selected, "tag2");
+AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.ic_maps_local_restaurant, R.drawable.ic_maps_place_selected, "tag3");
 
 // Add items
 bottomNavigation.addItem(item1);
@@ -86,6 +90,9 @@ bottomNavigation.setInactiveColor(Color.parseColor("#747474"));
 
 // Force to tint the drawable (useful for font with icon for example)
 bottomNavigation.setForceTint(true);
+
+// Disable tint on icons
+bottomNavigation.setAutoTint(true);
 
 // Display color under navigation bar (API 21+)
 // Don't forget these lines in your style-v21
