@@ -1185,6 +1185,10 @@ public class AHBottomNavigation extends FrameLayout {
         createItems();
     }
 
+    public void setTag(int index, String tag) {
+        if (index >= 0 && index < views.size()) views.get(index).setTag(tag);
+    }
+
 	/**
 	 * Get item at the given index
 	 *
