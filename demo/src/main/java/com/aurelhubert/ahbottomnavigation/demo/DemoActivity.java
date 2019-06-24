@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
@@ -327,5 +328,40 @@ public class DemoActivity extends AppCompatActivity {
     public void setTab3FontSize(View view) {
         bottomNavigation.setTitleActiveTextSizeInSp(2, (float) 19);
         bottomNavigation.setTitleInactiveTextSizeInSp(2, null);
+    }
+
+    private boolean tab1PimpleVisible;
+    public void tab1Pimple(View view) {
+        if (tab1PimpleVisible) {
+            tab1PimpleVisible = false;
+            bottomNavigation.setNotificationSize(AHNotification.NOTIFICATION_SIZE_DEFAULT, 0);
+        } else {
+            tab1PimpleVisible = true;
+            bottomNavigation.setNotificationSize(dpToPx(8), 0);
+        }
+    }
+
+    private boolean tab2PimpleVisible;
+    public void tab2Pimple(View view) {
+        if (tab2PimpleVisible) {
+            tab2PimpleVisible = false;
+            bottomNavigation.setNotification("", 1);
+        } else {
+            tab2PimpleVisible = true;
+            bottomNavigation.setNotification(new AHNotification.Builder().setSize(dpToPx(12)).build(), 1);
+        }
+    }
+
+    public void tab2Badge(View view) {
+        tab2PimpleVisible = false;
+        bottomNavigation.setNotification(new AHNotification.Builder()
+                .setText("99+")
+                .setBackgroundColor(Color.GREEN)
+                .build(), 1);
+    }
+
+    private int dpToPx(int dp) {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        return dp * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 }

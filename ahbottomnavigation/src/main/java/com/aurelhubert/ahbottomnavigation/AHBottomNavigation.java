@@ -16,6 +16,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.Px;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -128,6 +129,7 @@ public class AHBottomNavigation extends FrameLayout {
 	private int notificationActiveMarginLeft, notificationInactiveMarginLeft;
 	private int notificationActiveMarginTop, notificationInactiveMarginTop;
 	private long notificationAnimationDuration;
+	private int defaultNotificationElevation;
 
 	/**
 	 * Constructors
@@ -199,6 +201,7 @@ public class AHBottomNavigation extends FrameLayout {
 	private void init(Context context, AttributeSet attrs) {
 		this.context = context;
 		resources = this.context.getResources();
+        defaultNotificationElevation = resources.getDimensionPixelSize(R.dimen.bottom_navigation_notification_elevation);
 
         // Icon colors
         fill(iconActiveColor, MAX_ITEMS, null);
@@ -877,10 +880,11 @@ public class AHBottomNavigation extends FrameLayout {
 
 			AHTextView notification = views.get(i).findViewById(R.id.bottom_navigation_notification);
 
-			String currentValue = notification.getText().toString();
-			boolean animate = !currentValue.equals(String.valueOf(notificationItem.getText()));
-
 			if (updateStyle) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    notification.setElevation(notificationItem.isPimple() ? 0 : defaultNotificationElevation);
+                }
+
 				notification.setTextColor(currentTextColor);
 				if (notificationTypeface != null) {
 					notification.setTypeface(notificationTypeface);
@@ -908,36 +912,64 @@ public class AHBottomNavigation extends FrameLayout {
 				}
 			}
 
-			if (notificationItem.isEmpty() && notification.getText().length() > 0) {
-				notification.setText("");
-				if (animate) {
-					notification.animate()
-							.scaleX(0)
-							.scaleY(0)
-							.alpha(0)
-							.setInterpolator(new AccelerateInterpolator())
-							.setDuration(notificationAnimationDuration)
-							.start();
-				}
-			} else if (!notificationItem.isEmpty()) {
-				notification.setText(String.valueOf(notificationItem.getText()));
-				if (animate) {
-					notification.setScaleX(0);
-					notification.setScaleY(0);
-					notification.animate()
-							.scaleX(1)
-							.scaleY(1)
-							.alpha(1)
-							.setInterpolator(new OvershootInterpolator())
-							.setDuration(notificationAnimationDuration)
-							.start();
-				}
-			}
+			if (notificationItem.isEmpty()) {
+                hideNotification(notificationItem, notification);
+            } else if (!notificationItem.isEmpty() || notificationItem.isPimple()) {
+                showNotification(notificationItem, notification);
+            }
 		}
 	}
 
+    private void showNotification(AHNotification notification, AHTextView notificationView) {
+        notificationView.setText(notification.getReadableText());
+        updateNotificationSize(notification, notificationView);
+        if (shouldAnimateNotification(notification, notificationView)) animateNotificationShow(notificationView);
+    }
 
-	////////////
+    private void animateNotificationShow(AHTextView notificationView) {
+        notificationView.animate()
+                .scaleX(1)
+                .scaleY(1)
+                .alpha(1)
+                .setInterpolator(new OvershootInterpolator())
+                .setDuration(notificationAnimationDuration)
+                .start();
+    }
+
+    private void hideNotification(AHNotification notification, AHTextView notificationView) {
+        notificationView.setScaleX(0);
+        notificationView.setScaleY(0);
+        updateNotificationSize(notification, notificationView);
+        notificationView.setText("");
+
+        if (shouldAnimateNotification(notification, notificationView)) animateHideNotification(notificationView);
+    }
+
+    private void animateHideNotification(AHTextView notificationView) {
+        notificationView.animate()
+                .scaleX(0)
+                .scaleY(0)
+                .alpha(0)
+                .setInterpolator(new AccelerateInterpolator())
+                .setDuration(notificationAnimationDuration)
+                .start();
+    }
+
+    private void updateNotificationSize(AHNotification notificationItem, AHTextView notification) {
+        ViewGroup.LayoutParams lp = notification.getLayoutParams();
+        lp.width = notificationItem.getSize() >= 0 && !notificationItem.hasText() ? notificationItem.getSize() : ViewGroup.LayoutParams.WRAP_CONTENT;
+        lp.height = notificationItem.getSize() >= 0 ? notificationItem.getSize() : getResources().getDimensionPixelSize(R.dimen.bottom_navigation_notification_height);
+        notification.requestLayout();
+    }
+
+    private boolean shouldAnimateNotification(AHNotification notificationItem, AHTextView notification) {
+        boolean shouldUpdateText = !notification.getText().toString().equals(notificationItem.getReadableText());
+        boolean shouldUpdateSize = notificationItem.getSize() != notification.getHeight();
+        return shouldUpdateText || shouldUpdateSize;
+    }
+
+
+    ////////////
 	// PUBLIC //
 	////////////
 
@@ -1477,6 +1509,11 @@ public class AHBottomNavigation extends FrameLayout {
 		notifications.set(itemPosition, notification);
 		updateNotifications(true, itemPosition);
 	}
+
+    public void setNotificationSize(@Px int size, int itemPosition) {
+        notifications.get(itemPosition).setSize(size);
+        updateNotifications(true, itemPosition);
+    }
 
 	/**
 	 * Set notification text color

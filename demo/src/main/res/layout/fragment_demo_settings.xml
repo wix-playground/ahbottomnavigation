@@ -84,4 +84,29 @@
             android:text="@string/fontSize"
             android:onClick="setTab3FontSize"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/tab1Pimple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab1_pimple"
+            android:onClick="tab1Pimple"/>
+        <Button
+            android:id="@+id/tab2Pimple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab2_pimple"
+            android:onClick="tab2Pimple"/>
+
+        <Button
+            android:id="@+id/tab2Badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab2_badge"
+            android:onClick="tab2Badge"/>
+    </LinearLayout>
 </LinearLayout>
