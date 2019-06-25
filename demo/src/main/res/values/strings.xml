@@ -15,7 +15,7 @@
     <string name="tab2_different_colors">Tab2 different colors</string>
     <string name="tab3_selected_icon_color">Tab3 colors</string>
     <string name="fontSize">Font Size</string>
-    <string name="tab1_pimple">Tab1 pimple</string>
-    <string name="tab2_pimple">Tab2 pimple</string>
+    <string name="tab1_dot">Tab1 dot</string>
+    <string name="tab2_dot">Tab2 dot</string>
     <string name="tab2_badge">Tab2 badge</string>
 </resources>

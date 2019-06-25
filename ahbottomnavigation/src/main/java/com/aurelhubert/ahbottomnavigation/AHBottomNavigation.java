@@ -882,7 +882,7 @@ public class AHBottomNavigation extends FrameLayout {
 
 			if (updateStyle) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    notification.setElevation(notificationItem.isPimple() ? 0 : defaultNotificationElevation);
+                    notification.setElevation(notificationItem.isDot() ? 0 : defaultNotificationElevation);
                 }
 
 				notification.setTextColor(currentTextColor);
@@ -914,7 +914,7 @@ public class AHBottomNavigation extends FrameLayout {
 
 			if (notificationItem.isEmpty()) {
                 hideNotification(notificationItem, notification);
-            } else if (!notificationItem.isEmpty() || notificationItem.isPimple()) {
+            } else if (!notificationItem.isEmpty() || notificationItem.isDot()) {
                 showNotification(notificationItem, notification);
             }
 		}

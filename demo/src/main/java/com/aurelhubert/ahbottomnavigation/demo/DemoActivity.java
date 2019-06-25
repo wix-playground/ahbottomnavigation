@@ -330,30 +330,30 @@ public class DemoActivity extends AppCompatActivity {
         bottomNavigation.setTitleInactiveTextSizeInSp(2, null);
     }
 
-    private boolean tab1PimpleVisible;
-    public void tab1Pimple(View view) {
-        if (tab1PimpleVisible) {
-            tab1PimpleVisible = false;
+    private boolean tab1DotVisible;
+    public void tab1Dot(View view) {
+        if (tab1DotVisible) {
+            tab1DotVisible = false;
             bottomNavigation.setNotificationSize(AHNotification.NOTIFICATION_SIZE_DEFAULT, 0);
         } else {
-            tab1PimpleVisible = true;
+            tab1DotVisible = true;
             bottomNavigation.setNotificationSize(dpToPx(8), 0);
         }
     }
 
-    private boolean tab2PimpleVisible;
-    public void tab2Pimple(View view) {
-        if (tab2PimpleVisible) {
-            tab2PimpleVisible = false;
+    private boolean tab2DotVisible;
+    public void tab2Dot(View view) {
+        if (tab2DotVisible) {
+            tab2DotVisible = false;
             bottomNavigation.setNotification("", 1);
         } else {
-            tab2PimpleVisible = true;
+            tab2DotVisible = true;
             bottomNavigation.setNotification(new AHNotification.Builder().setSize(dpToPx(12)).build(), 1);
         }
     }
 
     public void tab2Badge(View view) {
-        tab2PimpleVisible = false;
+        tab2DotVisible = false;
         bottomNavigation.setNotification(new AHNotification.Builder()
                 .setText("99+")
                 .setBackgroundColor(Color.GREEN)

@@ -43,7 +43,7 @@ public class AHNotification implements Parcelable {
         return TextUtils.isEmpty(text) && size < 0;
     }
 
-    public boolean isPimple() {
+    public boolean isDot() {
         return TextUtils.isEmpty(text) && size >= 0;
     }
 

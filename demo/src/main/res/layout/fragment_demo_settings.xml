@@ -90,17 +90,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/tab1Pimple"
+            android:id="@+id/tab1Dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tab1_pimple"
-            android:onClick="tab1Pimple"/>
+            android:text="@string/tab1_dot"
+            android:onClick="tab1Dot"/>
         <Button
-            android:id="@+id/tab2Pimple"
+            android:id="@+id/tab2Dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tab2_pimple"
-            android:onClick="tab2Pimple"/>
+            android:text="@string/tab2_dot"
+            android:onClick="tab2Dot"/>
 
         <Button
             android:id="@+id/tab2Badge"
