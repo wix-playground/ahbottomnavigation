@@ -913,7 +913,7 @@ public class AHBottomNavigation extends FrameLayout {
 			}
 
 			if (notificationItem.isEmpty()) {
-                hideNotification(notificationItem, notification);
+                hideNotification(notification);
             } else if (!notificationItem.isEmpty() || notificationItem.isDot()) {
                 showNotification(notificationItem, notification);
             }
@@ -923,11 +923,11 @@ public class AHBottomNavigation extends FrameLayout {
     private void showNotification(AHNotification notification, AHTextView notificationView) {
         notificationView.setText(notification.getReadableText());
         updateNotificationSize(notification, notificationView);
-        if (shouldAnimateNotification(notification, notificationView)) animateNotificationShow(notificationView);
+        if (notificationView.getAlpha() != 1) animateNotificationShow(notificationView);
     }
 
-    private void animateNotificationShow(AHTextView notificationView) {
-        notificationView.animate()
+    private void animateNotificationShow(AHTextView notification) {
+        notification.animate()
                 .scaleX(1)
                 .scaleY(1)
                 .alpha(1)
@@ -936,17 +936,12 @@ public class AHBottomNavigation extends FrameLayout {
                 .start();
     }
 
-    private void hideNotification(AHNotification notification, AHTextView notificationView) {
-        notificationView.setScaleX(0);
-        notificationView.setScaleY(0);
-        updateNotificationSize(notification, notificationView);
-        notificationView.setText("");
-
-        if (shouldAnimateNotification(notification, notificationView)) animateHideNotification(notificationView);
+    private void hideNotification(AHTextView notification) {
+        if (notification.getAlpha() != 0) animateHideNotification(notification);
     }
 
-    private void animateHideNotification(AHTextView notificationView) {
-        notificationView.animate()
+    private void animateHideNotification(AHTextView notification) {
+        notification.animate()
                 .scaleX(0)
                 .scaleY(0)
                 .alpha(0)
@@ -1510,9 +1505,10 @@ public class AHBottomNavigation extends FrameLayout {
 		updateNotifications(true, itemPosition);
 	}
 
-    public void setNotificationSize(@Px int size, int itemPosition) {
-        notifications.get(itemPosition).setSize(size);
-        updateNotifications(true, itemPosition);
+    public void setNotificationSize(int index, @Px Integer size) {
+        if (AHHelper.equals(notifications.get(index).getSize(), size)) return;
+        notifications.get(index).setSize(size);
+        updateNotifications(true, index);
     }
 
 	/**

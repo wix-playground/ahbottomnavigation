@@ -254,6 +254,6 @@ public class AHHelper {
     }
 
     public static boolean equals(@Nullable Object o1, @Nullable Object o2) {
-        return o1 == null && o2 == null || o1 != null && o2 != null && o1.equals(o2);
+        return o1 == null && o2 == null || o1 != null && o1.equals(o2);
     }
 }

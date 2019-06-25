@@ -334,10 +334,10 @@ public class DemoActivity extends AppCompatActivity {
     public void tab1Dot(View view) {
         if (tab1DotVisible) {
             tab1DotVisible = false;
-            bottomNavigation.setNotificationSize(AHNotification.NOTIFICATION_SIZE_DEFAULT, 0);
+            bottomNavigation.setNotificationSize(0, AHNotification.NOTIFICATION_SIZE_DEFAULT);
         } else {
             tab1DotVisible = true;
-            bottomNavigation.setNotificationSize(dpToPx(8), 0);
+            bottomNavigation.setNotificationSize(0, dpToPx(8));
         }
     }
 
@@ -352,12 +352,21 @@ public class DemoActivity extends AppCompatActivity {
         }
     }
 
+    private boolean tab2BadgeVisible;
     public void tab2Badge(View view) {
         tab2DotVisible = false;
-        bottomNavigation.setNotification(new AHNotification.Builder()
-                .setText("99+")
-                .setBackgroundColor(Color.GREEN)
-                .build(), 1);
+        if (tab2BadgeVisible) {
+            tab2BadgeVisible = false;
+            bottomNavigation.setNotification(new AHNotification.Builder()
+                    .setText("")
+                    .build(), 1);
+        } else {
+            tab2BadgeVisible = true;
+            bottomNavigation.setNotification(new AHNotification.Builder()
+                    .setText("99+")
+                    .setBackgroundColor(Color.GREEN)
+                    .build(), 1);
+        }
     }
 
     private int dpToPx(int dp) {
