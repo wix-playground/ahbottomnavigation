@@ -40,7 +40,11 @@ public class AHNotification implements Parcelable {
     }
 
     public boolean isEmpty() {
-        return TextUtils.isEmpty(text) && size < 0;
+        return TextUtils.isEmpty(text) && size <= 0;
+    }
+
+    public boolean hasValue() {
+        return !TextUtils.isEmpty(text) || size != NOTIFICATION_SIZE_DEFAULT;
     }
 
     public boolean isDot() {
@@ -117,7 +121,8 @@ public class AHNotification implements Parcelable {
             return this;
         }
 
-        public Builder setBackgroundColor(@ColorInt int backgroundColor) {
+        public Builder setBackgroundColor(@ColorInt Integer backgroundColor) {
+            if (backgroundColor == null) return this;
             this.backgroundColor = backgroundColor;
             return this;
         }

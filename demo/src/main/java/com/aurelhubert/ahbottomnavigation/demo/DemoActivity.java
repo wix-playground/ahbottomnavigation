@@ -343,6 +343,7 @@ public class DemoActivity extends AppCompatActivity {
 
     private boolean tab2DotVisible;
     public void tab2Dot(View view) {
+        tab2BadgeVisible = false;
         if (tab2DotVisible) {
             tab2DotVisible = false;
             bottomNavigation.setNotification("", 1);
