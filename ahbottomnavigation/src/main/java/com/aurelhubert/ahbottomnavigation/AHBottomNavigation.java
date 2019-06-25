@@ -927,6 +927,9 @@ public class AHBottomNavigation extends FrameLayout {
     }
 
     private void animateNotificationShow(AHTextView notification) {
+	    notification.setScaleX(0);
+        notification.setScaleY(0);
+        notification.setAlpha(0);
         notification.animate()
                 .scaleX(1)
                 .scaleY(1)
