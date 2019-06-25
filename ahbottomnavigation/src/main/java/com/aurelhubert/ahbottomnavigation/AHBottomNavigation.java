@@ -914,7 +914,7 @@ public class AHBottomNavigation extends FrameLayout {
 
 			if (notificationItem.isEmpty()) {
                 hideNotification(notification);
-            } else if (!notificationItem.isEmpty() || notificationItem.isDot()) {
+            } else {
                 showNotification(notificationItem, notification);
             }
 		}
