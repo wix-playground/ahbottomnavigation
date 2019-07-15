@@ -1,6 +1,7 @@
 package com.aurelhubert.ahbottomnavigation;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -46,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.aurelhubert.ahbottomnavigation.AHHelper.fill;
 import static com.aurelhubert.ahbottomnavigation.AHHelper.map;
 
@@ -253,8 +255,7 @@ public class AHBottomNavigation extends FrameLayout {
 		ViewCompat.setElevation(this, resources.getDimension(R.dimen.bottom_navigation_elevation));
 		setClipToPadding(false);
 
-		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT, bottomNavigationHeight);
+		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(MATCH_PARENT, bottomNavigationHeight);
 		setLayoutParams(params);
 	}
 
@@ -274,8 +275,7 @@ public class AHBottomNavigation extends FrameLayout {
 		views.clear();
 		backgroundColorView = new View(context);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			LayoutParams backgroundLayoutParams = new LayoutParams(
-					ViewGroup.LayoutParams.MATCH_PARENT, calculateHeight(layoutHeight));
+			LayoutParams backgroundLayoutParams = new LayoutParams(MATCH_PARENT, calculateHeight(layoutHeight));
 			addView(backgroundColorView, backgroundLayoutParams);
 			bottomNavigationHeight = layoutHeight;
 		}
@@ -284,7 +284,7 @@ public class AHBottomNavigation extends FrameLayout {
 		linearLayoutContainer.setOrientation(LinearLayout.HORIZONTAL);
 		linearLayoutContainer.setGravity(Gravity.CENTER);
 
-		LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, layoutHeight);
+		LayoutParams layoutParams = new LayoutParams(MATCH_PARENT, layoutHeight);
 		addView(linearLayoutContainer, layoutParams);
 
 		if (titleState != TitleState.ALWAYS_HIDE &&
@@ -305,25 +305,17 @@ public class AHBottomNavigation extends FrameLayout {
 		if(!translucentNavigationEnabled) return layoutHeight;
 
 		int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-		if (resourceId > 0) {
-			navigationBarHeight = resources.getDimensionPixelSize(resourceId);
-		}
+		if (resourceId > 0) navigationBarHeight = resources.getDimensionPixelSize(resourceId);
 
 		int[] attrs = {android.R.attr.fitsSystemWindows, android.R.attr.windowTranslucentNavigation};
 		TypedArray typedValue = getContext().getTheme().obtainStyledAttributes(attrs);
 
 		@SuppressWarnings("ResourceType")
-		boolean fitWindow = typedValue.getBoolean(0, false);
-
-		@SuppressWarnings("ResourceType")
 		boolean translucentNavigation = typedValue.getBoolean(1, true);
 
-		if(hasImmersive() /*&& !fitWindow*/ && translucentNavigation) {
-			layoutHeight += navigationBarHeight;
-		}
+		if(hasImmersive() && translucentNavigation) layoutHeight += navigationBarHeight;
 
 		typedValue.recycle();
-
 		return layoutHeight;
 	}
 
@@ -346,17 +338,6 @@ public class AHBottomNavigation extends FrameLayout {
 
 		return (realWidth > displayWidth) || (realHeight > displayHeight);
 	}
-
-	// updated
-
-    /**
-     * Check if items must be classic
-     *
-     * @return true if classic (icon + title)
-     */
-    private boolean isClassic() {
-        return titleState == TitleState.ALWAYS_SHOW || items.size() <= MIN_ITEMS && titleState != TitleState.ALWAYS_SHOW;
-    }
 
 	/**
 	 * Create classic items (only 3 items in the bottom navigation)
@@ -949,6 +930,13 @@ public class AHBottomNavigation extends FrameLayout {
                 .scaleY(0)
                 .alpha(0)
                 .setInterpolator(new AccelerateInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        if (notification.getAlpha() == 0) notification.setText("");
+                    }
+
+                })
                 .setDuration(notificationAnimationDuration)
                 .start();
     }
