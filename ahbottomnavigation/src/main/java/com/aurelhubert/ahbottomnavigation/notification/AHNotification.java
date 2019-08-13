@@ -155,6 +155,7 @@ public class AHNotification implements Parcelable {
             notification.textColor = textColor;
             notification.backgroundColor = backgroundColor;
             notification.size = size;
+            notification.animate = animate;
             return notification;
         }
     }
