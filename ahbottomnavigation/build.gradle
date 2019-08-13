@@ -25,8 +25,7 @@ ext {
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 14
@@ -47,7 +46,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:design:26.1.0'
+    compile 'com.google.android.material:material:1.0.0'
 }
 
 // Place it at the end of the file

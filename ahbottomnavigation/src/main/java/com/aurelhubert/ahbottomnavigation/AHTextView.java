@@ -1,10 +1,10 @@
 package com.aurelhubert.ahbottomnavigation;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 
-public class AHTextView extends android.support.v7.widget.AppCompatTextView {
+public class AHTextView extends androidx.appcompat.widget.AppCompatTextView {
     private Integer originalTextColor;
 
     public AHTextView(Context context) {

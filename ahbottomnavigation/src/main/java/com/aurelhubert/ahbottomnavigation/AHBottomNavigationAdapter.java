@@ -1,9 +1,9 @@
 package com.aurelhubert.ahbottomnavigation;
 
 import android.app.Activity;
-import android.support.annotation.ColorInt;
-import android.support.annotation.MenuRes;
-import android.support.v7.widget.PopupMenu;
+import androidx.annotation.ColorInt;
+import androidx.annotation.MenuRes;
+import androidx.appcompat.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 
