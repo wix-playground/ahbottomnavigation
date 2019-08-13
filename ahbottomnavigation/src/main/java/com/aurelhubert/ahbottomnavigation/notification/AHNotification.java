@@ -30,6 +30,8 @@ public class AHNotification implements Parcelable {
     @Px
     private int size = NOTIFICATION_SIZE_DEFAULT;
 
+    private boolean animate = false;
+
     public AHNotification() {
         // empty
     }
@@ -73,6 +75,14 @@ public class AHNotification implements Parcelable {
         this.size = size;
     }
 
+    public void setAnimate(boolean animate) {
+        this.animate = animate;
+    }
+
+    public boolean shouldAnimate() {
+        return animate;
+    }
+
     public static AHNotification justText(String text) {
         return new Builder().setText(text).build();
     }
@@ -111,6 +121,7 @@ public class AHNotification implements Parcelable {
         private int backgroundColor;
         @Px
         private int size = NOTIFICATION_SIZE_DEFAULT;
+        private boolean animate = false;
 
         public Builder setText(String text) {
             this.text = text;
@@ -130,6 +141,11 @@ public class AHNotification implements Parcelable {
 
         public Builder setSize(@Px int size) {
             this.size = size;
+            return this;
+        }
+
+        public Builder animate(boolean animate) {
+            this.animate = animate;
             return this;
         }
 

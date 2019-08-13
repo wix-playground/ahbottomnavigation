@@ -202,7 +202,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 * Init
 	 */
 	private void init(Context context, AttributeSet attrs) {
-		this.context = context;
+        this.context = context;
 		resources = this.context.getResources();
         defaultNotificationElevation = resources.getDimensionPixelSize(R.dimen.bottom_navigation_notification_elevation);
 
@@ -346,7 +346,6 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param linearLayout The layout where the items are added
 	 */
 	private void createClassicItems(LinearLayout linearLayout) {
-
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		float height = resources.getDimension(R.dimen.bottom_navigation_height);
@@ -474,7 +473,6 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param linearLayout The layout where the items are added
 	 */
 	private void createSmallItems(LinearLayout linearLayout) {
-
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		float height = resources.getDimension(R.dimen.bottom_navigation_height);
@@ -503,7 +501,6 @@ public class AHBottomNavigation extends FrameLayout {
 
 
 		for (int i = 0; i < items.size(); i++) {
-
 			final int itemIndex = i;
 			AHBottomNavigationItem item = items.get(itemIndex);
 
@@ -895,7 +892,7 @@ public class AHBottomNavigation extends FrameLayout {
 			}
 
 			if (notificationItem.isEmpty()) {
-                hideNotification(notification);
+                hideNotification(notificationItem, notification);
             } else {
                 showNotification(notificationItem, notification);
             }
@@ -905,7 +902,15 @@ public class AHBottomNavigation extends FrameLayout {
     private void showNotification(AHNotification notification, AHTextView notificationView) {
         notificationView.setText(notification.getReadableText());
         updateNotificationSize(notification, notificationView);
-        if (notificationView.getAlpha() != 1) animateNotificationShow(notificationView);
+        if (notificationView.getAlpha() != 1) {
+            if (notification.shouldAnimate()) {
+                animateNotificationShow(notificationView);
+            } else {
+                notificationView.setScaleX(1);
+                notificationView.setScaleY(1);
+                notificationView.setAlpha(1);
+            }
+        }
     }
 
     private void animateNotificationShow(AHTextView notification) {
@@ -921,8 +926,16 @@ public class AHBottomNavigation extends FrameLayout {
                 .start();
     }
 
-    private void hideNotification(AHTextView notification) {
-        if (notification.getAlpha() != 0) animateHideNotification(notification);
+    private void hideNotification(AHNotification notification, AHTextView notificationView) {
+        if (notificationView.getAlpha() != 0) {
+            if (notification.shouldAnimate()) {
+                animateHideNotification(notificationView);
+            } else {
+                notificationView.setScaleX(0);
+                notificationView.setScaleY(0);
+                notificationView.setAlpha(0);
+            }
+        }
     }
 
     private void animateHideNotification(AHTextView notification) {
