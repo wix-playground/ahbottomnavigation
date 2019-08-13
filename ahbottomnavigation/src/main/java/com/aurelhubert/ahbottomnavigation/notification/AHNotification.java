@@ -2,17 +2,21 @@ package com.aurelhubert.ahbottomnavigation.notification;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.annotation.ColorInt;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.Px;
+
 /**
  * @author repitch
  */
 public class AHNotification implements Parcelable {
+    public static final int NOTIFICATION_SIZE_DEFAULT = -1;
 
     @Nullable
     private String text; // can be null, so notification will not be shown
@@ -22,6 +26,9 @@ public class AHNotification implements Parcelable {
 
     @ColorInt
     private int backgroundColor; // if 0 then use default value
+
+    @Px
+    private int size = NOTIFICATION_SIZE_DEFAULT;
 
     public AHNotification() {
         // empty
@@ -34,11 +41,20 @@ public class AHNotification implements Parcelable {
     }
 
     public boolean isEmpty() {
-        return TextUtils.isEmpty(text);
+        return TextUtils.isEmpty(text) && size <= 0;
     }
 
-    public String getText() {
-        return text;
+    public boolean hasValue() {
+        return text != null || size != NOTIFICATION_SIZE_DEFAULT;
+    }
+
+    public boolean isDot() {
+        return TextUtils.isEmpty(text) && size >= 0;
+    }
+
+    @NonNull
+    public String getReadableText() {
+        return text == null ? "" : text;
     }
 
     public int getTextColor() {
@@ -47,6 +63,14 @@ public class AHNotification implements Parcelable {
 
     public int getBackgroundColor() {
         return backgroundColor;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(@Px int size) {
+        this.size = size;
     }
 
     public static AHNotification justText(String text) {
@@ -71,6 +95,11 @@ public class AHNotification implements Parcelable {
         dest.writeString(text);
         dest.writeInt(textColor);
         dest.writeInt(backgroundColor);
+        dest.writeInt(size);
+    }
+
+    public boolean hasText() {
+        return !TextUtils.isEmpty(text);
     }
 
     public static class Builder {
@@ -80,6 +109,8 @@ public class AHNotification implements Parcelable {
         private int textColor;
         @ColorInt
         private int backgroundColor;
+        @Px
+        private int size = NOTIFICATION_SIZE_DEFAULT;
 
         public Builder setText(String text) {
             this.text = text;
@@ -91,8 +122,14 @@ public class AHNotification implements Parcelable {
             return this;
         }
 
-        public Builder setBackgroundColor(@ColorInt int backgroundColor) {
+        public Builder setBackgroundColor(@ColorInt Integer backgroundColor) {
+            if (backgroundColor == null) return this;
             this.backgroundColor = backgroundColor;
+            return this;
+        }
+
+        public Builder setSize(@Px int size) {
+            this.size = size;
             return this;
         }
 
@@ -101,6 +138,7 @@ public class AHNotification implements Parcelable {
             notification.text = text;
             notification.textColor = textColor;
             notification.backgroundColor = backgroundColor;
+            notification.size = size;
             return notification;
         }
     }

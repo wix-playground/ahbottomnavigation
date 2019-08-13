@@ -84,4 +84,29 @@
             android:text="@string/fontSize"
             android:onClick="setTab3FontSize"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/tab1Dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab1_dot"
+            android:onClick="tab1Dot"/>
+        <Button
+            android:id="@+id/tab2Dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab2_dot"
+            android:onClick="tab2Dot"/>
+
+        <Button
+            android:id="@+id/tab2Badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab2_badge"
+            android:onClick="tab2Badge"/>
+    </LinearLayout>
 </LinearLayout>

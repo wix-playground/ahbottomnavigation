@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
@@ -327,5 +329,50 @@ public class DemoActivity extends AppCompatActivity {
     public void setTab3FontSize(View view) {
         bottomNavigation.setTitleActiveTextSizeInSp(2, (float) 19);
         bottomNavigation.setTitleInactiveTextSizeInSp(2, null);
+    }
+
+    private boolean tab1DotVisible;
+    public void tab1Dot(View view) {
+        if (tab1DotVisible) {
+            tab1DotVisible = false;
+            bottomNavigation.setNotificationSize(0, AHNotification.NOTIFICATION_SIZE_DEFAULT);
+        } else {
+            tab1DotVisible = true;
+            bottomNavigation.setNotificationSize(0, dpToPx(8));
+        }
+    }
+
+    private boolean tab2DotVisible;
+    public void tab2Dot(View view) {
+        tab2BadgeVisible = false;
+        if (tab2DotVisible) {
+            tab2DotVisible = false;
+            bottomNavigation.setNotification("", 1);
+        } else {
+            tab2DotVisible = true;
+            bottomNavigation.setNotification(new AHNotification.Builder().setSize(dpToPx(12)).build(), 1);
+        }
+    }
+
+    private boolean tab2BadgeVisible;
+    public void tab2Badge(View view) {
+        tab2DotVisible = false;
+        if (tab2BadgeVisible) {
+            tab2BadgeVisible = false;
+            bottomNavigation.setNotification(new AHNotification.Builder()
+                    .setText("")
+                    .build(), 1);
+        } else {
+            tab2BadgeVisible = true;
+            bottomNavigation.setNotification(new AHNotification.Builder()
+                    .setText("99+")
+                    .setBackgroundColor(Color.GREEN)
+                    .build(), 1);
+        }
+    }
+
+    private int dpToPx(int dp) {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        return dp * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 }
