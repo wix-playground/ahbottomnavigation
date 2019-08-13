@@ -880,13 +880,11 @@ public class AHBottomNavigation extends FrameLayout {
 					}
 
 				} else if (currentBackgroundColor != 0) {
-					Drawable defautlDrawable = ContextCompat.getDrawable(context, R.drawable.notification_background);
+					Drawable defaultDrawable = ContextCompat.getDrawable(context, R.drawable.notification_background);
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-						notification.setBackground(AHHelper.getTintDrawable(defautlDrawable,
-								currentBackgroundColor, forceTint));
+						notification.setBackground(AHHelper.getTintDrawable(defaultDrawable, currentBackgroundColor, forceTint));
 					} else {
-						notification.setBackgroundDrawable(AHHelper.getTintDrawable(defautlDrawable,
-								currentBackgroundColor, forceTint));
+						notification.setBackgroundDrawable(AHHelper.getTintDrawable(defaultDrawable, currentBackgroundColor, forceTint));
 					}
 				}
 			}
@@ -905,6 +903,7 @@ public class AHBottomNavigation extends FrameLayout {
         if (notificationView.getAlpha() != 1) {
             if (notification.shouldAnimate()) {
                 animateNotificationShow(notificationView);
+                notification.setAnimate(false);
             } else {
                 notificationView.setScaleX(1);
                 notificationView.setScaleY(1);
@@ -930,6 +929,7 @@ public class AHBottomNavigation extends FrameLayout {
         if (notificationView.getAlpha() != 0) {
             if (notification.shouldAnimate()) {
                 animateHideNotification(notificationView);
+                notification.setAnimate(false);
             } else {
                 notificationView.setScaleX(0);
                 notificationView.setScaleY(0);
