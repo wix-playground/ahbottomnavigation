@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 
 /**
  * AHBottomNavigationItem
@@ -18,40 +20,36 @@ import androidx.appcompat.content.res.AppCompatResources;
 public class AHBottomNavigationItem {
 	
 	private String title = "";
-	private Drawable drawable;
+	private Drawable icon;
+    private Drawable selectedIcon;
     private String tag;
     private int color = Color.GRAY;
-	
-	private
-	@StringRes
-	int titleRes = 0;
-	private
-	@DrawableRes
-	int drawableRes = 0;
-	private
-	@ColorRes
-	int colorRes = 0;
-	
+
+    private @DrawableRes int iconRes = 0;
+    private @DrawableRes int selectedIconRes = 0;
+	private @StringRes int titleRes = 0;
+	private @ColorRes int colorRes = 0;
+
 	/**
 	 * Constructor
 	 *
 	 * @param title    Title
-	 * @param resource Drawable resource
+	 * @param iconRes Drawable resource
 	 */
-	public AHBottomNavigationItem(String title, @DrawableRes int resource) {
+	public AHBottomNavigationItem(String title, @DrawableRes int iconRes) {
 		this.title = title;
-		this.drawableRes = resource;
+		this.iconRes = iconRes;
 	}
-	
+
 	/**
 	 * @param title    Title
-	 * @param resource Drawable resource
+	 * @param iconRes Drawable resource
 	 * @param color    Background color
 	 */
 	@Deprecated
-	public AHBottomNavigationItem(String title, @DrawableRes int resource, @ColorRes int color) {
+	public AHBottomNavigationItem(String title, @DrawableRes int iconRes, @ColorRes int color) {
 		this.title = title;
-		this.drawableRes = resource;
+		this.iconRes = iconRes;
 		this.color = color;
 	}
 	
@@ -59,12 +57,12 @@ public class AHBottomNavigationItem {
 	 * Constructor
 	 *
 	 * @param titleRes    String resource
-	 * @param drawableRes Drawable resource
+	 * @param iconRes Drawable resource
 	 * @param colorRes    Color resource
 	 */
-	public AHBottomNavigationItem(@StringRes int titleRes, @DrawableRes int drawableRes, @ColorRes int colorRes) {
+	public AHBottomNavigationItem(@StringRes int titleRes, @DrawableRes int iconRes, @ColorRes int colorRes) {
 		this.titleRes = titleRes;
-		this.drawableRes = drawableRes;
+		this.iconRes = iconRes;
 		this.colorRes = colorRes;
 	}
 
@@ -72,14 +70,14 @@ public class AHBottomNavigationItem {
      * Constructor
      *
      * @param titleRes    String resource
-     * @param drawableRes Drawable resource
+     * @param iconRes Drawable resource
      */
-    public AHBottomNavigationItem(@StringRes int titleRes, @DrawableRes int drawableRes) {
+    public AHBottomNavigationItem(@StringRes int titleRes, @DrawableRes int iconRes) {
         this.titleRes = titleRes;
-        this.drawableRes = drawableRes;
+        this.iconRes = iconRes;
     }
-	
-	/**
+
+    /**
 	 * Constructor
 	 *
 	 * @param title    String
@@ -87,19 +85,19 @@ public class AHBottomNavigationItem {
 	 */
 	public AHBottomNavigationItem(String title, Drawable drawable) {
 		this.title = title;
-		this.drawable = drawable;
+		this.icon = drawable;
 	}
 
     /**
      * Constructor
      *
      * @param title    String
-     * @param drawable Drawable
+     * @param icon Drawable
      * @param tag String
      */
-    public AHBottomNavigationItem(String title, Drawable drawable, String tag) {
+    public AHBottomNavigationItem(String title, Drawable icon, Drawable selectedIcon, String tag) {
         this.title = title;
-        this.drawable = drawable;
+        this.icon = icon;
         this.tag = tag;
     }
 	
@@ -112,7 +110,7 @@ public class AHBottomNavigationItem {
 	 */
 	public AHBottomNavigationItem(String title, Drawable drawable, @ColorInt int color) {
 		this.title = title;
-		this.drawable = drawable;
+		this.icon = drawable;
 		this.color = color;
 	}
 
@@ -151,27 +149,45 @@ public class AHBottomNavigationItem {
 	}
 	
 	public Drawable getDrawable(Context context) {
-		if (drawableRes != 0) {
-			try {
-				return AppCompatResources.getDrawable(context, drawableRes);
-			} catch (Resources.NotFoundException e) {
-				return ContextCompat.getDrawable(context, drawableRes);
-			}
-		}
-		return drawable;
+	    Drawable icon = this.icon == null ? getResourceDrawable(context, iconRes) : this.icon;
+	    Drawable selectedIcon = this.selectedIcon == null ? getResourceDrawable(context, selectedIconRes) : this.selectedIcon;
+
+        StateListDrawable stateDrawable = new StateListDrawable();
+        if (selectedIcon != null) stateDrawable.addState(new int[] { android.R.attr.state_selected }, selectedIcon);
+        stateDrawable.addState(new int[] {}, icon);
+        return stateDrawable;
+	}
+
+	public void setIcon(@DrawableRes int drawableRes) {
+		this.iconRes = drawableRes;
+		this.icon = null;
 	}
 	
-	public void setDrawable(@DrawableRes int drawableRes) {
-		this.drawableRes = drawableRes;
-		this.drawable = null;
+	public void setIcon(Drawable drawable) {
+		this.icon = drawable;
+		this.iconRes = 0;
 	}
-	
-	public void setDrawable(Drawable drawable) {
-		this.drawable = drawable;
-		this.drawableRes = 0;
-	}
+
+    public void setSelectedIcon(Drawable selectedIcon) {
+        this.selectedIcon = selectedIcon;
+    }
+
+    public void setSelectedIcon(@DrawableRes int selectedIconRes) {
+        this.selectedIconRes = selectedIconRes;
+    }
 
     public String getTag() {
         return tag;
+    }
+
+    private Drawable getResourceDrawable(Context context, @DrawableRes int drawableRes) {
+        if (drawableRes != 0) {
+            try {
+                return AppCompatResources.getDrawable(context, drawableRes);
+            } catch (Resources.NotFoundException e) {
+                return ContextCompat.getDrawable(context, drawableRes);
+            }
+        }
+        return null;
     }
 }
