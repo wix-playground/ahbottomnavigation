@@ -98,6 +98,7 @@ public class AHBottomNavigationItem {
     public AHBottomNavigationItem(String title, Drawable icon, Drawable selectedIcon, String tag) {
         this.title = title;
         this.icon = icon;
+        this.selectedIcon = selectedIcon;
         this.tag = tag;
     }
 	
