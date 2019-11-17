@@ -122,7 +122,7 @@ public class AHBottomNavigation extends FrameLayout {
 	private int bottomNavigationHeight, navigationBarHeight = 0;
 	private float selectedItemWidth, notSelectedItemWidth;
 	private boolean forceTint = false;
-    private boolean alwaysUseBigItems = false;
+    private boolean preferLargeIcons = false;
 	private TitleState titleState = TitleState.SHOW_WHEN_ACTIVE;
 
 	// Notifications
@@ -289,9 +289,9 @@ public class AHBottomNavigation extends FrameLayout {
 		LayoutParams layoutParams = new LayoutParams(MATCH_PARENT, layoutHeight);
 		addView(linearLayoutContainer, layoutParams);
 
-		if ((alwaysUseBigItems && items.size() == MIN_ITEMS) || (titleState != TitleState.ALWAYS_HIDE &&
+		if ((preferLargeIcons && items.size() == MIN_ITEMS) || (titleState != TitleState.ALWAYS_HIDE &&
 				titleState != TitleState.SHOW_WHEN_ACTIVE_FORCE &&
-				(items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW))) {
+                                                                (items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW))) {
 			createClassicItems(linearLayoutContainer);
 		} else {
 			createSmallItems(linearLayoutContainer);
@@ -1273,8 +1273,8 @@ public class AHBottomNavigation extends FrameLayout {
 			return;
 		}
 
-		if ((alwaysUseBigItems && items.size() == MIN_ITEMS) || (titleState != TitleState.ALWAYS_HIDE &&
-				(items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW))) {
+		if ((preferLargeIcons && items.size() == MIN_ITEMS) || (titleState != TitleState.ALWAYS_HIDE &&
+                                                                (items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW))) {
 			updateItems(position, useCallback);
 		} else {
 			updateSmallItems(position, useCallback);
@@ -1705,8 +1705,8 @@ public class AHBottomNavigation extends FrameLayout {
 		void onPositionChange(int y);
 	}
 
-    public void setAlwaysUseBigItems(boolean alwaysUseBigItems) {
-        this.alwaysUseBigItems = alwaysUseBigItems;
+    public void setPreferLargeIcons(boolean preferLargeIcons) {
+        this.preferLargeIcons = preferLargeIcons;
     }
 
     private int dpToPx(int dp) {
