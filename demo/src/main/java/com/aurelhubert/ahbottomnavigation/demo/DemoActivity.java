@@ -287,6 +287,7 @@ public class DemoActivity extends AppCompatActivity {
 	 * Set title state for bottomNavigation
 	 */
 	public void setTitleState(AHBottomNavigation.TitleState titleState) {
+		if (titleState == AHBottomNavigation.TitleState.ALWAYS_HIDE) bottomNavigation.setAlwaysUseBigItems(true);
 		bottomNavigation.setTitleState(titleState);
 	}
 

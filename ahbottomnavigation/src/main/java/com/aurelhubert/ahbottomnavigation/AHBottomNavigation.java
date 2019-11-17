@@ -122,6 +122,7 @@ public class AHBottomNavigation extends FrameLayout {
 	private int bottomNavigationHeight, navigationBarHeight = 0;
 	private float selectedItemWidth, notSelectedItemWidth;
 	private boolean forceTint = false;
+    private boolean alwaysUseBigItems = false;
 	private TitleState titleState = TitleState.SHOW_WHEN_ACTIVE;
 
 	// Notifications
@@ -288,9 +289,9 @@ public class AHBottomNavigation extends FrameLayout {
 		LayoutParams layoutParams = new LayoutParams(MATCH_PARENT, layoutHeight);
 		addView(linearLayoutContainer, layoutParams);
 
-		if (titleState != TitleState.ALWAYS_HIDE &&
+		if ((alwaysUseBigItems && items.size() == MIN_ITEMS) || (titleState != TitleState.ALWAYS_HIDE &&
 				titleState != TitleState.SHOW_WHEN_ACTIVE_FORCE &&
-				(items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW)) {
+				(items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW))) {
 			createClassicItems(linearLayoutContainer);
 		} else {
 			createSmallItems(linearLayoutContainer);
@@ -383,7 +384,14 @@ public class AHBottomNavigation extends FrameLayout {
             AHTextView notification = view.findViewById(R.id.bottom_navigation_notification);
 
 			icon.setImageDrawable(item.getDrawable(context));
-			title.setText(item.getTitle(context));
+			if (titleState == TitleState.ALWAYS_HIDE) {
+			    title.setVisibility(View.GONE);
+                ((LayoutParams) icon.getLayoutParams()).gravity = Gravity.CENTER;
+                int iconHeight = resources.getDimensionPixelSize(R.dimen.bottom_navigation_icon);
+                ((MarginLayoutParams) notification.getLayoutParams()).topMargin = (bottomNavigationHeight - iconHeight) / 2 - dpToPx(4);
+            } else {
+                title.setText(item.getTitle(context));
+            }
 
             title.setTypeface(titleTypeface.get(i));
 
@@ -1697,4 +1705,12 @@ public class AHBottomNavigation extends FrameLayout {
 		void onPositionChange(int y);
 	}
 
+    public void setAlwaysUseBigItems(boolean alwaysUseBigItems) {
+        this.alwaysUseBigItems = alwaysUseBigItems;
+    }
+
+    private int dpToPx(int dp) {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        return dp * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
 }
