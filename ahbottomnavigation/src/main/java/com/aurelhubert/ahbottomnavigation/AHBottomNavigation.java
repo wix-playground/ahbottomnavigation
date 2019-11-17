@@ -1273,8 +1273,8 @@ public class AHBottomNavigation extends FrameLayout {
 			return;
 		}
 
-		if (titleState != TitleState.ALWAYS_HIDE &&
-				(items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW)) {
+		if ((alwaysUseBigItems && items.size() == MIN_ITEMS) || (titleState != TitleState.ALWAYS_HIDE &&
+				(items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW))) {
 			updateItems(position, useCallback);
 		} else {
 			updateSmallItems(position, useCallback);
