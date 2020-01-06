@@ -289,10 +289,8 @@ public class AHBottomNavigation extends FrameLayout {
 		LayoutParams layoutParams = new LayoutParams(MATCH_PARENT, layoutHeight);
 		addView(linearLayoutContainer, layoutParams);
 
-		if ((preferLargeIcons && items.size() == MIN_ITEMS) || (titleState != TitleState.ALWAYS_HIDE &&
-				titleState != TitleState.SHOW_WHEN_ACTIVE_FORCE &&
-                                                                (items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW))) {
-			createClassicItems(linearLayoutContainer);
+		if (isClassic()) {
+        createClassicItems(linearLayoutContainer);
 		} else {
 			createSmallItems(linearLayoutContainer);
 		}
@@ -300,6 +298,18 @@ public class AHBottomNavigation extends FrameLayout {
 		// Force a request layout after all the items have been created
 		post(this::requestLayout);
 	}
+
+    /**
+     * Check if items must be classic
+     *
+     * @return true if classic (icon + title)
+     */
+    private boolean isClassic() {
+        if (preferLargeIcons && items.size() == MIN_ITEMS) return true;
+        return titleState != TitleState.ALWAYS_HIDE &&
+               titleState != TitleState.SHOW_WHEN_ACTIVE_FORCE &&
+               (items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW);
+    }
 
 	@SuppressLint("NewApi")
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -1273,8 +1283,7 @@ public class AHBottomNavigation extends FrameLayout {
 			return;
 		}
 
-		if ((preferLargeIcons && items.size() == MIN_ITEMS) || (titleState != TitleState.ALWAYS_HIDE &&
-                                                                (items.size() == MIN_ITEMS || titleState == TitleState.ALWAYS_SHOW))) {
+        if (isClassic()) {
 			updateItems(position, useCallback);
 		} else {
 			updateSmallItems(position, useCallback);
