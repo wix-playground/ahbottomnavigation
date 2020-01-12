@@ -290,7 +290,7 @@ public class AHBottomNavigation extends FrameLayout {
 		addView(linearLayoutContainer, layoutParams);
 
 		if (isClassic()) {
-        createClassicItems(linearLayoutContainer);
+            createClassicItems(linearLayoutContainer);
 		} else {
 			createSmallItems(linearLayoutContainer);
 		}
@@ -455,13 +455,12 @@ public class AHBottomNavigation extends FrameLayout {
 				title.setTextColor(titleDisableColor.get(i));
 			}
 
-            if (item.getTag() != null) {
-			    view.setTag(item.getTag());
-            }
+            if (item.getTag() != null) view.setTag(item.getTag());
 
-			LayoutParams params = new LayoutParams((int) itemWidth, (int) height);
+            LayoutParams params = new LayoutParams((int) itemWidth, (int) height);
 			linearLayout.addView(view, params);
 			views.add(view);
+            setTabAccessibilityLabel(itemIndex, currentItem);
 		}
 
 		updateNotifications(true, UPDATE_ALL_NOTIFICATIONS);
@@ -520,6 +519,7 @@ public class AHBottomNavigation extends FrameLayout {
 
 		for (int i = 0; i < items.size(); i++) {
 			final int itemIndex = i;
+            final boolean current = currentItem == i;
 			AHBottomNavigationItem item = items.get(itemIndex);
 
 			View view = inflater.inflate(R.layout.bottom_navigation_small_item, this, false);
@@ -539,7 +539,7 @@ public class AHBottomNavigation extends FrameLayout {
 
             title.setTypeface(titleTypeface.get(i));
 
-			if (i == currentItem) {
+			if (current) {
 				if (selectedBackgroundVisible) {
 					view.setSelected(true);
 				}
@@ -599,18 +599,28 @@ public class AHBottomNavigation extends FrameLayout {
 				width = (int) (itemWidth * 1.16);
 			}
 
-            if (item.getTag() != null) {
-                view.setTag(item.getTag());
-            }
+            if (item.getTag() != null) view.setTag(item.getTag());
 
 			LayoutParams params = new LayoutParams(width, (int) height);
 			linearLayout.addView(view, params);
 			views.add(view);
-		}
+            setTabAccessibilityLabel(itemIndex, currentItem);
+        }
 
 		updateNotifications(true, UPDATE_ALL_NOTIFICATIONS);
 	}
 
+    private void setTabAccessibilityLabel(int itemIndex, int currentItem) {
+        AHBottomNavigationItem item = items.get(itemIndex);
+        String contentDescription = currentItem == itemIndex ? "selected, " : "";
+        if (item.getTitle(context) != null) contentDescription += (item.getTitle(context) + ", ");
+        if (AHHelper.isInteger(notifications.get(itemIndex).getReadableText())) {
+            int num = Integer.parseInt(notifications.get(itemIndex).getReadableText());
+            contentDescription += (num + " new item" + (num == 1 ? "" : "s") + ", ");
+        }
+        contentDescription += "tab, " + (itemIndex + 1) + " out of " + getItemsCount();
+        views.get(itemIndex).setContentDescription(contentDescription);
+    }
 
 	/**
 	 * Update Items UI
@@ -619,7 +629,9 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param useCallback boolean: Use or not the callback
 	 */
 	private void updateItems(final int itemIndex, boolean useCallback) {
-
+        for (int i = 0; i < items.size(); i++) {
+            setTabAccessibilityLabel(i, itemIndex);
+        }
 		if (currentItem == itemIndex) {
 			if (tabSelectedListener != null && useCallback) {
 				tabSelectedListener.onTabSelected(itemIndex, true);

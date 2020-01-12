@@ -8,9 +8,6 @@ import android.content.ContextWrapper;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import androidx.annotation.ColorInt;
-import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.DrawableCompat;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -21,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 /**
  *
@@ -255,5 +256,16 @@ public class AHHelper {
 
     public static boolean equals(@Nullable Object o1, @Nullable Object o2) {
         return o1 == null && o2 == null || o1 != null && o1.equals(o2);
+    }
+
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        } catch(NullPointerException e) {
+            return false;
+        }
+        return true;
     }
 }

@@ -101,7 +101,7 @@ public class AHBottomNavigationItem {
         this.selectedIcon = selectedIcon;
         this.tag = tag;
     }
-	
+
 	/**
 	 * Constructor
 	 *
