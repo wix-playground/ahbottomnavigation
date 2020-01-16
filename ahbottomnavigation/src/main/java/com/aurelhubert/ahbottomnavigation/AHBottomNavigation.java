@@ -629,7 +629,7 @@ public class AHBottomNavigation extends FrameLayout {
 	 * @param useCallback boolean: Use or not the callback
 	 */
 	private void updateItems(final int itemIndex, boolean useCallback) {
-        for (int i = 0; i < items.size(); i++) {
+        for (int i = 0; i < views.size(); i++) {
             setTabAccessibilityLabel(i, itemIndex);
         }
 		if (currentItem == itemIndex) {
