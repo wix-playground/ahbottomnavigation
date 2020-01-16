@@ -619,7 +619,9 @@ public class AHBottomNavigation extends FrameLayout {
             contentDescription += (num + " new item" + (num == 1 ? "" : "s") + ", ");
         }
         contentDescription += "tab, " + (itemIndex + 1) + " out of " + getItemsCount();
-        views.get(itemIndex).setContentDescription(contentDescription);
+        if (views.size()>itemIndex) {
+            views.get(itemIndex).setContentDescription(contentDescription);
+        }
     }
 
 	/**
