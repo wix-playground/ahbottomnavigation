@@ -191,4 +191,11 @@ public class AHBottomNavigationItem {
         }
         return null;
     }
+
+    public boolean hasIcon() {
+	    return icon != null ||
+               iconRes != 0 ||
+               selectedIcon != null ||
+               selectedIconRes != 0;
+    }
 }
