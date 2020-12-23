@@ -85,6 +85,16 @@ public class AHHelper {
 		animator.start();
 	}
 
+    public static void updateMargin(final View view, int left, int top, int right, int bottom) {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            lp.leftMargin = left;
+            lp.topMargin = top;
+            lp.rightMargin = right;
+            lp.bottomMargin = bottom;
+        }
+    }
+
 	/**
 	 * Update left margin with animation
 	 */
