@@ -205,10 +205,6 @@ public class AHBottomNavigation extends FrameLayout {
 		super.onRestoreInstanceState(state);
 	}
 
-	public static float pxFromDp(final Context context, final float dp) {
-		return dp * context.getResources().getDisplayMetrics().density;
-	}
-
 
 	/////////////
 	// PRIVATE //
