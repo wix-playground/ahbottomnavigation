@@ -205,6 +205,11 @@ public class AHBottomNavigation extends FrameLayout {
 		super.onRestoreInstanceState(state);
 	}
 
+	public static float pxFromDp(final Context context, final float dp) {
+		return dp * context.getResources().getDisplayMetrics().density;
+	}
+
+
 	/////////////
 	// PRIVATE //
 	/////////////
@@ -219,8 +224,8 @@ public class AHBottomNavigation extends FrameLayout {
         activePaddingTop = (int) resources.getDimension(R.dimen.bottom_navigation_margin_top_active);
         activeMarginTop = (int) resources.getDimension(R.dimen.bottom_navigation_small_margin_top_active);
         widthDifference = resources.getDimension(R.dimen.bottom_navigation_small_selected_width_difference);
-        defaultIconHeight = resources.getDimension(R.dimen.bottom_navigation_icon);
-        defaultIconWidth = resources.getDimension(R.dimen.bottom_navigation_icon);
+        defaultIconHeight = dpToPx(R.dimen.bottom_navigation_icon);
+        defaultIconWidth = dpToPx(R.dimen.bottom_navigation_icon);
 
         // Icon colors
         fill(iconActiveColor, MAX_ITEMS, null);
