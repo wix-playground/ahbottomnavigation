@@ -41,6 +41,8 @@ import java.util.Locale;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -1316,6 +1318,16 @@ public class AHBottomNavigation extends FrameLayout {
         if (index >= 0 && index < views.size()) views.get(index).setTag(tag);
     }
 
+	public void setTag(int index, @IdRes int key, @NonNull String tag) {
+		if (index >= 0 && index < views.size()) views.get(index).setTag(key,tag);
+	}
+
+	@Nullable
+	public String getTag(int index, @IdRes int key){
+		if (index >= 0 && index < views.size())
+			return (String) views.get(index).getTag(key);
+		else return null;
+	}
 	/**
 	 * Get item at the given index
 	 *
