@@ -128,7 +128,8 @@ public class AHNotification implements Parcelable {
             return this;
         }
 
-        public Builder setTextColor(@ColorInt int textColor) {
+        public Builder setTextColor(@ColorInt Integer textColor) {
+            if (textColor == null) return this;
             this.textColor = textColor;
             return this;
         }
