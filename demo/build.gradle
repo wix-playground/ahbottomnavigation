@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 34
 
     defaultConfig {
+        namespace 'com.aurelhubert.ahbottomnavigation.demo'
         applicationId "com.aurelhubert.ahbottomnavigation.demo"
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -21,16 +22,15 @@ android {
 
     android {
         compileOptions {
-            sourceCompatibility 1.8
-            targetCompatibility 1.8
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
         }
     }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.12.0'
     implementation project(':ahbottomnavigation')
-    testImplementation'junit:junit:4.12'
 }
